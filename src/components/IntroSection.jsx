@@ -23,7 +23,7 @@ const IntroSection = () => {
               The first weeks of your exchange are key: between paperwork and settling in, you’ll dive into a new culture and meet people who could become lifelong friends. You’ll share experiences and explore together. Want to start this adventure with a group of like‑minded people?
             </Typography>
             <Typography sx={{ mt: 1.5, maxWidth: 760, color: "text.primary", fontSize: 18, fontWeight: 600 }}>
-              Party Animals is a 10-day Introduction Program for new incoming international students organised by ESN TUMi from October 3rd to 12th. There are 6 groups of 20 international students each, who are accompanied by 4 tutors during their introduction to Munich’s student (night) life.
+              Party Animals is a 10-day Introduction Program for new incoming international students organised by ESN TUMi from April 6th to 12th. There are 6 groups of 20 international students each, who are accompanied by 4 tutors during their introduction to Munich’s student (night) life.
             </Typography>
 
             <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
