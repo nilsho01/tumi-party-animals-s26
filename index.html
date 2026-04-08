@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports Day 2025 🏆</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;line-height:1.5}
+:root{
+  --bg:#0f172a;--surface:#1e293b;--surface2:#334155;--border:#475569;
+  --text:#f1f5f9;--muted:#94a3b8;--primary:#3b82f6;
+  --success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+  --gg:#22c55e;--tt:#06b6d4;--pp:#a855f7;--pi:#ec4899;
+  --r:12px;--rs:8px;--shadow:0 4px 24px rgba(0,0,0,.4)
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-logo{font-size:1.2rem;font-weight:800;white-space:nowrap}
+.nav-links{display:flex;gap:.2rem;list-style:none;align-items:center}
+.nav-links a,.nav-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .8rem;border-radius:var(--rs);color:var(--muted);font-size:.875rem;font-weight:500;transition:all .15s;cursor:pointer;border:none;background:none}
+.nav-links a:hover,.nav-btn:hover{color:var(--text);background:var(--surface2)}
+.nav-links a.active{color:var(--text);background:var(--surface)}
+.nav-dd{position:relative}
+.nav-dd-menu{display:none;position:absolute;top:calc(100% + 8px);left:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.5rem;min-width:210px;box-shadow:var(--shadow);z-index:200}
+.nav-dd:hover .nav-dd-menu,.nav-dd:focus-within .nav-dd-menu{display:block}
+.nav-dd-menu a{display:flex;align-items:center;gap:.75rem;padding:.55rem .75rem;border-radius:var(--rs);font-size:.875rem;transition:background .1s}
+.nav-dd-menu a:hover{background:var(--surface2)}
+.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer;border:none;background:none}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-links{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:var(--bg);padding:1rem;flex-direction:column;gap:.25rem;overflow-y:auto;z-index:99}
+  .nav-links.open{display:flex}
+  .nav-dd-menu{position:static;box-shadow:none;border:none;background:var(--surface2);margin-left:1rem;margin-top:.25rem}
+  .nav-dd-menu a{font-size:.8rem}
+}
+
+/* MAIN */
+main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+@media(max-width:768px){main{padding:1rem}}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem}
+.card-sm{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:1rem}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1.25rem;border-radius:var(--rs);border:none;font-size:.875rem;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:#2563eb}
+.btn-success{background:var(--success);color:#fff}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);border-color:var(--muted)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-warning{background:var(--warning);color:#1a1a1a}
+.btn-warning:hover{background:#d97706}
+.btn-sm{padding:.35rem .75rem;font-size:.8rem}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{background:var(--surface2)}
+.w-full{width:100%}
+
+/* TEAM COLORS */
+.c-gg{color:var(--gg)}.c-tt{color:var(--tt)}.c-pp{color:var(--pp)}.c-pi{color:var(--pi)}
+.bg-gg{background:var(--gg)}.bg-tt{background:var(--tt)}.bg-pp{background:var(--pp)}.bg-pi{background:var(--pi)}
+.border-gg{border-color:var(--gg)}.border-tt{border-color:var(--tt)}.border-pp{border-color:var(--pp)}.border-pi{border-color:var(--pi)}
+
+/* TEAM BADGE */
+.tbadge{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .7rem;border-radius:999px;font-size:.8rem;font-weight:700;color:#fff;white-space:nowrap}
+.tbadge-gg{background:var(--gg)}.tbadge-tt{background:var(--tt)}.tbadge-pp{background:var(--pp)}.tbadge-pi{background:var(--pi)}
+
+/* SPORT BADGE */
+.sbadge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .55rem;border-radius:6px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.sbadge-volleyball{background:#1e3a8a;color:#bfdbfe}
+.sbadge-frisbee{background:#064e3b;color:#a7f3d0}
+.sbadge-dodgeball{background:#7c2d12;color:#fed7aa}
+.sbadge-tugofwar{background:#4a1d96;color:#ddd6fe}
+
+/* GAME CARD */
+.game-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;cursor:pointer;transition:all .15s;display:block;color:var(--text)}
+.game-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.game-vs{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin:.75rem 0}
+.game-score-display{font-size:2.5rem;font-weight:900;padding:.25rem .75rem;background:var(--surface2);border-radius:var(--rs);min-width:100px;text-align:center}
+.game-score-pending{font-size:1rem;font-weight:600;padding:.5rem 1rem;background:var(--surface2);border-radius:var(--rs);color:var(--muted);text-align:center}
+
+/* RESULT COLORS */
+.res-win{color:var(--success);font-weight:700}
+.res-loss{color:var(--danger);font-weight:700}
+.res-draw{color:var(--warning);font-weight:700}
+.res-pending{color:var(--muted)}
+
+/* STANDINGS */
+.standings-table{width:100%;border-collapse:collapse}
+.standings-table th{padding:.65rem 1rem;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+.standings-table td{padding:.8rem 1rem;border-bottom:1px solid var(--border);font-size:.875rem}
+.standings-table tr:last-child td{border-bottom:none}
+.standings-table tbody tr:hover td{background:var(--surface2)}
+.rank-badge{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;border-radius:50%;font-size:.75rem;font-weight:800}
+.rank-1{background:#f59e0b;color:#1a1a1a}
+.rank-2{background:#94a3b8;color:#1a1a1a}
+.rank-3{background:#b45309;color:#fff}
+.rank-o{background:var(--surface2);color:var(--muted)}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media(max-width:900px){.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+/* FLEX UTILS */
+.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.flex-wrap{flex-wrap:wrap}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}
+.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}
+.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}
+.ml-auto{margin-left:auto}
+.text-center{text-align:center}.text-right{text-align:right}
+.text-muted{color:var(--muted)}.text-sm{font-size:.875rem}.text-xs{font-size:.75rem}.text-lg{font-size:1.125rem}.text-xl{font-size:1.25rem}.text-2xl{font-size:1.5rem}.text-3xl{font-size:1.875rem}
+.font-bold{font-weight:700}.font-black{font-weight:900}
+.hidden{display:none!important}
+.opacity-50{opacity:.5}
+
+/* LUNCH BREAK */
+.lunch-break{display:flex;align-items:center;justify-content:center;gap:.75rem;padding:1.25rem;background:linear-gradient(135deg,#422006,#431407);border:1px solid #854d0e;border-radius:var(--r);margin:1.5rem 0;color:#fde68a;font-weight:700}
+
+/* SECTION */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.section-title{font-size:1.2rem;font-weight:700}
+.page-title{font-size:2rem;font-weight:800;margin-bottom:.4rem}
+.page-sub{color:var(--muted);margin-bottom:1.75rem}
+
+/* FORM */
+.form-group{margin-bottom:1rem}
+.form-label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
+.form-input{width:100%;padding:.6rem .875rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);color:var(--text);font-size:.9rem;font-family:inherit;transition:border-color .15s}
+.form-input:focus{outline:none;border-color:var(--primary)}
+select.form-input{cursor:pointer}
+.score-inp{width:72px;text-align:center;font-size:1.4rem;font-weight:700;padding:.4rem}
+
+/* MODAL */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-ov.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:min(520px,95vw);max-height:90vh;overflow-y:auto;box-shadow:var(--shadow)}
+.modal-title{font-size:1.2rem;font-weight:700;margin-bottom:1.5rem}
+
+/* ALERT */
+.alert{padding:.8rem 1.1rem;border-radius:var(--rs);font-size:.875rem;margin-bottom:1rem}
+.alert-error{background:#450a0a;border:1px solid #b91c1c;color:#fca5a5}
+.alert-success{background:#052e16;border:1px solid #166534;color:#86efac}
+.alert-info{background:#0c1a40;border:1px solid #1d4ed8;color:#93c5fd}
+.alert-warn{background:#451a03;border:1px solid #92400e;color:#fde68a}
+
+/* STAT CARD */
+.stat-card{background:var(--surface2);border-radius:var(--rs);padding:1.1rem;text-align:center}
+.stat-val{font-size:2rem;font-weight:800;line-height:1}
+.stat-lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.3rem}
+
+/* TEAM HEADER */
+.team-header{border-radius:var(--r);padding:2rem;margin-bottom:2rem;position:relative;overflow:hidden}
+
+/* BRACKET */
+.bracket-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:1rem;text-align:center;min-width:140px}
+.bracket-box.winner{border-color:var(--warning);background:#1a1200}
+
+/* REFEREE TABLE */
+.ref-table{width:100%;border-collapse:collapse}
+.ref-table th{padding:.6rem 1rem;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);border-bottom:1px solid var(--border)}
+.ref-table td{padding:.75rem 1rem;border-bottom:1px solid var(--border);font-size:.875rem;vertical-align:middle}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table tbody tr:hover td{background:var(--surface2)}
+
+/* TIMELINE DOT */
+.round-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.round-num{width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0}
+.round-time{font-weight:700}
+.round-sport{font-size:.75rem;color:var(--muted)}
+.schedule-round{margin-bottom:1.75rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid var(--border);border-radius:var(--r);padding:2.5rem 2rem;margin-bottom:2rem;text-align:center}
+.hero-title{font-size:2.5rem;font-weight:900;margin-bottom:.5rem}
+.hero-sub{color:var(--muted);font-size:1.05rem;margin-bottom:1.5rem}
+.team-row{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:1.5rem 0}
+
+/* PILL */
+.pill{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600;background:var(--surface2);color:var(--muted)}
+
+/* ENTRY LOG */
+.entry-log{background:var(--surface2);border-radius:var(--rs);padding:.875rem 1rem;font-size:.8rem;color:var(--muted);border-left:3px solid var(--border)}
+
+/* SPORT ICON */
+.sport-icon{font-size:2rem}
+
+/* MOBILE TABLE SCROLL */
+.table-wrap{overflow-x:auto;border-radius:var(--rs)}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#home" class="nav-logo" onclick="closeMenu()">🏆 Sports Day 2025</a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#home" onclick="closeMenu()">🏠 Start</a></li>
+    <li class="nav-dd">
+      <button class="nav-btn">👥 Teams ▾</button>
+      <div class="nav-dd-menu" id="teams-dd"></div>
+    </li>
+    <li><a href="#schedule" onclick="closeMenu()">📅 Spielplan</a></li>
+    <li><a href="#tow" onclick="closeMenu()">🪢 Tug of War</a></li>
+    <li><a href="#referees" onclick="closeMenu()">🟡 Schiedsrichter</a></li>
+    <li><a href="#admin" onclick="closeMenu()">⚙️ Admin</a></li>
+  </ul>
+</nav>
+
+<div class="modal-ov" id="modal-ov" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<main id="root"></main>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+
+const TEAMS = {
+  gg: { id:'gg', name:'Green Goats',       short:'GG',  emoji:'🐐', color:'#22c55e' },
+  tt: { id:'tt', name:'Turquoise Turtles', short:'TT',  emoji:'🐢', color:'#06b6d4' },
+  pp: { id:'pp', name:'Purple Panthers',   short:'PP',  emoji:'🐆', color:'#a855f7' },
+  pi: { id:'pi', name:'Pink Penguins',     short:'PPi', emoji:'🐧', color:'#ec4899' },
+};
+
+const SPORTS = {
+  volleyball: { name:'Volleyball',      icon:'🏐', badge:'sbadge-volleyball' },
+  frisbee:    { name:'Ultimate Frisbee',icon:'🥏', badge:'sbadge-frisbee'   },
+  dodgeball:  { name:'Dodgeball',       icon:'🎯', badge:'sbadge-dodgeball' },
+  tugofwar:   { name:'Tug of War',      icon:'🪢', badge:'sbadge-tugofwar'  },
+};
+
+// Each team plays 2x each sport = 6 games total
+// Schedule: Round 1-3 before lunch (11:30-13:00), Round 4-6 after (14:00-15:30)
+const GAMES = [
+  { id:1,  round:1, time:'11:30', timeEnd:'12:00', sport:'volleyball', t1:'gg', t2:'tt', field:'Feld A' },
+  { id:2,  round:1, time:'11:30', timeEnd:'12:00', sport:'volleyball', t1:'pp', t2:'pi', field:'Feld B' },
+  { id:3,  round:2, time:'12:00', timeEnd:'12:30', sport:'volleyball', t1:'gg', t2:'pp', field:'Feld A' },
+  { id:4,  round:2, time:'12:00', timeEnd:'12:30', sport:'volleyball', t1:'tt', t2:'pi', field:'Feld B' },
+  { id:5,  round:3, time:'12:30', timeEnd:'13:00', sport:'frisbee',    t1:'gg', t2:'pi', field:'Feld A' },
+  { id:6,  round:3, time:'12:30', timeEnd:'13:00', sport:'frisbee',    t1:'tt', t2:'pp', field:'Feld B' },
+  { id:7,  round:4, time:'14:00', timeEnd:'14:30', sport:'frisbee',    t1:'gg', t2:'tt', field:'Feld A' },
+  { id:8,  round:4, time:'14:00', timeEnd:'14:30', sport:'frisbee',    t1:'pp', t2:'pi', field:'Feld B' },
+  { id:9,  round:5, time:'14:30', timeEnd:'15:00', sport:'dodgeball',  t1:'gg', t2:'pp', field:'Feld A' },
+  { id:10, round:5, time:'14:30', timeEnd:'15:00', sport:'dodgeball',  t1:'tt', t2:'pi', field:'Feld B' },
+  { id:11, round:6, time:'15:00', timeEnd:'15:30', sport:'dodgeball',  t1:'gg', t2:'pi', field:'Feld A' },
+  { id:12, round:6, time:'15:00', timeEnd:'15:30', sport:'dodgeball',  t1:'tt', t2:'pp', field:'Feld B' },
+];
+
+// Tug of War: bracket (SF → 3rd/Final)
+const TOW = [
+  { id:'sf1',   label:'Halbfinale 1', time:'15:30', timeEnd:'15:45' },
+  { id:'sf2',   label:'Halbfinale 2', time:'15:30', timeEnd:'15:45' },
+  { id:'third', label:'Platz 3',      time:'16:00', timeEnd:'16:15' },
+  { id:'final', label:'Finale 🏆',    time:'16:00', timeEnd:'16:15' },
+];
+
+// ═══════════════════════════════════════════════
+// STATE (localStorage)
+// ═══════════════════════════════════════════════
+
+const SK = 'sportsday2025_v1';
+
+function initState() {
+  return {
+    results: {},      // gameId -> { s1, s2, refTeam, tutor, ts }
+    towBracket: {     // teamId or null for each slot
+      sf1t1: 'gg', sf1t2: 'tt',
+      sf2t1: 'pp', sf2t2: 'pi',
+      thirdT1: null, thirdT2: null,
+      finalT1: null, finalT2: null,
+    },
+    towResults: {},   // 'sf1'|'sf2'|'third'|'final' -> { winner }
+    towPlacements: {}, // teamId -> 1|2|3|4 (set when final+3rd complete)
+    refAssignments: {}, // gameId -> name string
+    settings: {
+      eventDate: '2025-05-15',
+      eventName: 'Sports Day 2024/25',
+      adminPw: 'admin2025',
+      refPw: 'ref2025',
+    }
+  };
+}
+
+function getState() {
+  try {
+    const s = localStorage.getItem(SK);
+    if (!s) return initState();
+    return Object.assign(initState(), JSON.parse(s));
+  } catch { return initState(); }
+}
+
+function saveState(st) {
+  localStorage.setItem(SK, JSON.stringify(st));
+}
+
+function updateState(fn) {
+  const st = getState();
+  fn(st);
+  saveState(st);
+}
+
+// Admin session (sessionStorage so it resets on tab close)
+function isAdmin() { return sessionStorage.getItem('sd_admin') === '1'; }
+function setAdmin(v) { v ? sessionStorage.setItem('sd_admin','1') : sessionStorage.removeItem('sd_admin'); }
+
+// ═══════════════════════════════════════════════
+// STANDINGS
+// ═══════════════════════════════════════════════
+
+function calcStandings() {
+  const st = getState();
+  const table = {};
+  Object.keys(TEAMS).forEach(id => {
+    table[id] = { id, played:0, w:0, d:0, l:0, pts:0, gf:0, ga:0, towPts:0 };
+  });
+  GAMES.forEach(g => {
+    const r = st.results[g.id];
+    if (r == null || r.s1 == null || r.s2 == null) return;
+    table[g.t1].played++; table[g.t2].played++;
+    table[g.t1].gf += +r.s1; table[g.t1].ga += +r.s2;
+    table[g.t2].gf += +r.s2; table[g.t2].ga += +r.s1;
+    if (+r.s1 > +r.s2) {
+      table[g.t1].w++; table[g.t2].l++; table[g.t1].pts += 2;
+    } else if (+r.s2 > +r.s1) {
+      table[g.t2].w++; table[g.t1].l++; table[g.t2].pts += 2;
+    } else {
+      table[g.t1].d++; table[g.t2].d++; table[g.t1].pts++; table[g.t2].pts++;
+    }
+  });
+  const towPts = { 1:4, 2:3, 3:2, 4:1 };
+  Object.entries(st.towPlacements || {}).forEach(([id, place]) => {
+    if (table[id]) table[id].towPts = towPts[place] || 0;
+  });
+  Object.values(table).forEach(t => t.total = t.pts + t.towPts);
+  return Object.values(table).sort((a,b) =>
+    b.total - a.total || (b.gf-b.ga) - (a.gf-a.ga) || b.gf - a.gf
+  );
+}
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+
+function tbadge(id, big) {
+  const t = TEAMS[id];
+  if (!t) return '';
+  const sz = big ? 'font-size:1rem;padding:.4rem .9rem' : '';
+  return `<span class="tbadge tbadge-${id}" style="${sz}">${t.emoji} ${t.name}</span>`;
+}
+
+function tbadgeShort(id) {
+  const t = TEAMS[id];
+  if (!t) return `<span class="tbadge tbadge-${id}">${id.toUpperCase()}</span>`;
+  return `<span class="tbadge tbadge-${id}">${t.emoji} ${t.short}</span>`;
+}
+
+function sbadge(sport) {
+  const sp = SPORTS[sport];
+  if (!sp) return '';
+  return `<span class="sbadge ${sp.badge}">${sp.icon} ${sp.name}</span>`;
+}
+
+function resultOf(gameId) {
+  const r = getState().results[gameId];
+  if (!r || r.s1 == null) return null;
+  return r;
+}
+
+function getResultLabel(gameId, teamId) {
+  const g = GAMES.find(x => x.id === gameId);
+  const r = resultOf(gameId);
+  if (!r || !g) return '';
+  const isT1 = g.t1 === teamId;
+  const myScore = isT1 ? +r.s1 : +r.s2;
+  const oppScore = isT1 ? +r.s2 : +r.s1;
+  if (myScore > oppScore) return '<span class="res-win">Sieg</span>';
+  if (myScore < oppScore) return '<span class="res-loss">Niederlage</span>';
+  return '<span class="res-draw">Unentschieden</span>';
+}
+
+function gamesByTeam(teamId) {
+  return GAMES.filter(g => g.t1 === teamId || g.t2 === teamId);
+}
+
+function formatDate(d) {
+  try { return new Date(d).toLocaleDateString('de-DE', {day:'2-digit',month:'long',year:'numeric'}); }
+  catch { return d; }
+}
+
+function nowRound() {
+  // Returns current round based on time (for highlighting)
+  const now = new Date();
+  const h = now.getHours(), m = now.getMinutes();
+  const mins = h * 60 + m;
+  const slots = [
+    { round:1, from:11*60+30, to:12*60 },
+    { round:2, from:12*60, to:12*60+30 },
+    { round:3, from:12*60+30, to:13*60 },
+    { round:4, from:14*60, to:14*60+30 },
+    { round:5, from:14*60+30, to:15*60 },
+    { round:6, from:15*60, to:15*60+30 },
+  ];
+  const cur = slots.find(s => mins >= s.from && mins < s.to);
+  return cur ? cur.round : null;
+}
+
+// ═══════════════════════════════════════════════
+// ROUTER
+// ═══════════════════════════════════════════════
+
+function route() {
+  const hash = location.hash.slice(1) || 'home';
+  const [page, ...params] = hash.split('/');
+  const root = document.getElementById('root');
+
+  // Update active nav
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + (page === 'team' || page === 'game' ? '' : page));
+  });
+
+  switch (page) {
+    case 'home':     root.innerHTML = viewHome(); break;
+    case 'team':     root.innerHTML = viewTeam(params[0]); break;
+    case 'game':     root.innerHTML = viewGame(parseInt(params[0])); break;
+    case 'schedule': root.innerHTML = viewSchedule(); break;
+    case 'tow':      root.innerHTML = viewTOW(); break;
+    case 'referees': root.innerHTML = viewReferees(); break;
+    case 'admin':    root.innerHTML = viewAdmin(); break;
+    default:         root.innerHTML = viewHome();
+  }
+  window.scrollTo(0, 0);
+  bindHandlers();
+}
+
+window.addEventListener('hashchange', route);
+window.addEventListener('load', () => {
+  buildTeamDropdown();
+  route();
+});
+
+function buildTeamDropdown() {
+  const dd = document.getElementById('teams-dd');
+  dd.innerHTML = Object.values(TEAMS).map(t =>
+    `<a href="#team/${t.id}" onclick="closeMenu()">
+      <span class="dot" style="background:${t.color}"></span>${t.emoji} ${t.name}
+    </a>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════
+// VIEW: HOME
+// ═══════════════════════════════════════════════
+
+function viewHome() {
+  const st = getState();
+  const standings = calcStandings();
+  const curRound = nowRound();
+  const totalPlayed = GAMES.filter(g => resultOf(g.id)).length;
+
+  // Next unplayed game
+  const nextGame = GAMES.find(g => !resultOf(g.id));
+
+  return `
+  <div class="hero">
+    <div class="text-muted text-sm mb-2">📅 ${formatDate(st.settings.eventDate)}</div>
+    <div class="hero-title">${st.settings.eventName}</div>
+    <div class="hero-sub">4 Teams · 3 Sportarten · Tug of War</div>
+    <div class="team-row">
+      ${Object.values(TEAMS).map(t => `<span class="tbadge tbadge-${t.id}" style="font-size:.95rem;padding:.45rem 1rem">${t.emoji} ${t.name}</span>`).join('')}
+    </div>
+  </div>
+
+  <div class="grid-4 mb-8">
+    <div class="stat-card">
+      <div class="stat-val">${totalPlayed}</div>
+      <div class="stat-lbl">Gespielte Spiele</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">${GAMES.length - totalPlayed}</div>
+      <div class="stat-lbl">Ausstehend</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">6</div>
+      <div class="stat-lbl">Spiele pro Team</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">3</div>
+      <div class="stat-lbl">Sportarten</div>
+    </div>
+  </div>
+
+  ${nextGame && !curRound ? `
+  <div class="alert alert-info mb-6 flex items-center gap-3">
+    <span style="font-size:1.5rem">${SPORTS[nextGame.sport].icon}</span>
+    <div>
+      <div class="font-bold">Nächstes Spiel: ${nextGame.time} Uhr – ${SPORTS[nextGame.sport].name}</div>
+      <div class="text-sm">${tbadgeShort(nextGame.t1)} vs ${tbadgeShort(nextGame.t2)} · ${nextGame.field}</div>
+    </div>
+    <a href="#game/${nextGame.id}" class="btn btn-primary btn-sm ml-auto">Details →</a>
+  </div>` : ''}
+
+  ${curRound ? `
+  <div class="alert alert-warn mb-6 flex items-center gap-3">
+    <span style="font-size:1.5rem">🟡</span>
+    <div class="font-bold">Runde ${curRound} läuft gerade!</div>
+  </div>` : ''}
+
+  <div class="grid-2 gap-6">
+    <div>
+      <div class="section-header">
+        <div class="section-title">🏆 Aktuelle Rangliste</div>
+        <a href="#admin" class="text-sm text-muted">Vollständig →</a>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <table class="standings-table">
+          <thead><tr>
+            <th>#</th><th>Team</th><th>Sp.</th><th>W</th><th>U</th><th>N</th><th>Tore</th><th>Pkt</th>
+          </tr></thead>
+          <tbody>
+            ${standings.map((t, i) => `
+            <tr>
+              <td><span class="rank-badge rank-${i < 3 ? i+1 : 'o'}">${i < 3 ? ['🥇','🥈','🥉'][i] : i+1}</span></td>
+              <td>${tbadge(t.id)}</td>
+              <td>${t.played}</td>
+              <td class="res-win">${t.w}</td>
+              <td class="res-draw">${t.d}</td>
+              <td class="res-loss">${t.l}</td>
+              <td class="text-muted">${t.gf}:${t.ga}</td>
+              <td class="font-bold">${t.total}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-header">
+        <div class="section-title">📅 Heutige Spiele</div>
+        <a href="#schedule" class="text-sm text-muted">Alle →</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        ${GAMES.slice(0, 6).map(g => gameCardSmall(g, curRound)).join('')}
+      </div>
+      ${GAMES.filter(g => !resultOf(g.id)).length === 0 ? `
+        <div class="alert alert-success mt-4">🎉 Alle Spiele sind abgeschlossen!</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function gameCardSmall(g, curRound) {
+  const r = resultOf(g.id);
+  const isCur = curRound === g.round;
+  return `
+  <a href="#game/${g.id}" class="game-card" style="${isCur ? 'border-color:var(--warning)' : ''}">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <div class="flex items-center gap-2">
+        ${sbadge(g.sport)}
+        ${isCur ? '<span class="pill" style="background:#451a03;color:#fde68a">🔴 Live</span>' : ''}
+      </div>
+      <span class="text-xs text-muted">${g.time} · ${g.field}</span>
+    </div>
+    <div class="flex items-center gap-3 justify-between">
+      <div>${tbadgeShort(g.t1)}</div>
+      ${r ? `<div class="font-black text-xl">${r.s1} : ${r.s2}</div>` : `<div class="text-muted text-sm font-bold">VS</div>`}
+      <div>${tbadgeShort(g.t2)}</div>
+    </div>
+  </a>`;
+}
+
+// ═══════════════════════════════════════════════
+// VIEW: SCHEDULE
+// ═══════════════════════════════════════════════
+
+function viewSchedule() {
+  const curRound = nowRound();
+  const rounds = [1,2,3,4,5,6];
+
+  return `
+  <div class="page-title">📅 Spielplan</div>
+  <div class="page-sub">6 Runden · Volleyball, Frisbee, Dodgeball · Jedes Team spielt 6 Spiele</div>
+
+  ${rounds.map(r => {
+    const games = GAMES.filter(g => g.round === r);
+    const g0 = games[0];
+    const sp = SPORTS[g0.sport];
+    const isCur = curRound === r;
+    return `
+    ${r === 4 ? `
+    <div class="lunch-break">
+      🍔 Mittagspause · 13:00 – 14:00 Uhr
+    </div>` : ''}
+    <div class="schedule-round">
+      <div class="round-header">
+        <div class="round-num" style="${isCur ? 'background:var(--warning);color:#1a1a1a' : ''}">${r}</div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="round-time">${g0.time} – ${g0.timeEnd} Uhr</span>
+            ${sbadge(g0.sport)}
+            ${isCur ? '<span class="pill" style="background:#451a03;color:#fde68a">🔴 Läuft gerade</span>' : ''}
+          </div>
+          <div class="round-sport">Runde ${r}</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        ${games.map(g => gameCardSmall(g, curRound)).join('')}
+      </div>
+    </div>`;
+  }).join('')}
+
+  <div class="schedule-round">
+    <div class="round-header">
+      <div class="round-num" style="background:var(--pp);color:#fff">🪢</div>
+      <div>
+        <div class="round-time">15:30 – 16:30 Uhr</div>
+        <div class="round-sport">Tug of War – Bracket-Turnier</div>
+      </div>
+      <a href="#tow" class="btn btn-outline btn-sm ml-auto">Details →</a>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// VIEW: TEAM
+// ═══════════════════════════════════════════════
+
+function viewTeam(id) {
+  const t = TEAMS[id];
+  if (!t) return `<div class="alert alert-error">Team nicht gefunden.</div>`;
+  const games = gamesByTeam(id);
+  const standings = calcStandings();
+  const ts = standings.find(s => s.id === id);
+  const pos = standings.findIndex(s => s.id === id) + 1;
+
+  const past = games.filter(g => resultOf(g.id));
+  const future = games.filter(g => !resultOf(g.id));
+
+  return `
+  <div class="team-header" style="background:linear-gradient(135deg,${t.color}22,${t.color}08);border:1px solid ${t.color}44">
+    <div class="flex items-center gap-4 flex-wrap">
+      <div style="font-size:4rem;line-height:1">${t.emoji}</div>
+      <div>
+        <div style="font-size:2rem;font-weight:900;color:${t.color}">${t.name}</div>
+        <div class="flex items-center gap-2 mt-2 flex-wrap">
+          ${Object.values(TEAMS).filter(x => x.id !== id).map(x =>
+            `<a href="#team/${x.id}" class="pill">${x.emoji} ${x.name}</a>`
+          ).join('')}
+        </div>
+      </div>
+      <div class="ml-auto text-right">
+        <div style="font-size:2.5rem;font-weight:900;color:${t.color}">#${pos}</div>
+        <div class="text-muted text-sm">Platz</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-4 mb-8">
+    <div class="stat-card"><div class="stat-val">${ts.played}</div><div class="stat-lbl">Gespielt</div></div>
+    <div class="stat-card"><div class="stat-val res-win">${ts.w}</div><div class="stat-lbl">Siege</div></div>
+    <div class="stat-card"><div class="stat-val res-draw">${ts.d}</div><div class="stat-lbl">Unentschieden</div></div>
+    <div class="stat-card"><div class="stat-val res-loss">${ts.l}</div><div class="stat-lbl">Niederlagen</div></div>
+  </div>
+
+  <div class="grid-2 gap-6">
+    ${future.length ? `
+    <div>
+      <div class="section-header">
+        <div class="section-title">⏳ Kommende Spiele</div>
+      </div>
+      <div class="flex flex-col gap-3">
+        ${future.map(g => teamGameCard(g, id)).join('')}
+      </div>
+    </div>` : ''}
+
+    ${past.length ? `
+    <div>
+      <div class="section-header">
+        <div class="section-title">✅ Vergangene Spiele</div>
+      </div>
+      <div class="flex flex-col gap-3">
+        ${past.map(g => teamGameCard(g, id)).join('')}
+      </div>
+    </div>` : ''}
+  </div>
+
+  ${!past.length && !future.length ? '<div class="alert alert-info">Keine Spiele gefunden.</div>' : ''}`;
+}
+
+function teamGameCard(g, myId) {
+  const r = resultOf(g.id);
+  const oppId = g.t1 === myId ? g.t2 : g.t1;
+  const myScore = r ? (g.t1 === myId ? r.s1 : r.s2) : null;
+  const oppScore = r ? (g.t1 === myId ? r.s2 : r.s1) : null;
+
+  return `
+  <a href="#game/${g.id}" class="game-card">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      ${sbadge(g.sport)}
+      <span class="text-xs text-muted">${g.time} · ${g.field}</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="font-bold">vs ${tbadgeShort(oppId)}</div>
+      ${r ? `
+        <div class="ml-auto flex items-center gap-2">
+          <span class="font-black text-xl">${myScore} : ${oppScore}</span>
+          ${getResultLabel(g.id, myId)}
+        </div>` :
+        `<div class="ml-auto text-muted text-sm">Ausstehend</div>`}
+    </div>
+  </a>`;
+}
+
+// ═══════════════════════════════════════════════
+// VIEW: GAME
+// ═══════════════════════════════════════════════
+
+function viewGame(id) {
+  const g = GAMES.find(x => x.id === id);
+  if (!g) return `<div class="alert alert-error">Spiel nicht gefunden.</div>`;
+
+  const r = resultOf(id);
+  const sp = SPORTS[g.sport];
+  const t1 = TEAMS[g.t1], t2 = TEAMS[g.t2];
+  const st = getState();
+
+  return `
+  <div class="mb-4">
+    <a href="#schedule" class="text-muted text-sm">← Spielplan</a>
+  </div>
+
+  <div class="card mb-6" style="text-align:center;padding:2.5rem">
+    <div class="mb-4">${sbadge(g.sport)}</div>
+    <div style="font-size:1.2rem;font-weight:700;margin-bottom:.25rem">${sp.icon} ${sp.name}</div>
+    <div class="text-muted text-sm mb-6">Runde ${g.round} · ${g.time}–${g.timeEnd} Uhr · ${g.field}</div>
+
+    <div class="game-vs">
+      <div style="text-align:center">
+        <div style="font-size:3rem">${t1.emoji}</div>
+        <a href="#team/${g.t1}"><span class="tbadge tbadge-${g.t1}" style="font-size:1rem;margin-top:.5rem">${t1.name}</span></a>
+      </div>
+
+      <div style="padding:0 1rem">
+        ${r
+          ? `<div class="game-score-display">${r.s1} : ${r.s2}</div>`
+          : `<div class="game-score-pending">– : –</div>`}
+      </div>
+
+      <div style="text-align:center">
+        <div style="font-size:3rem">${t2.emoji}</div>
+        <a href="#team/${g.t2}"><span class="tbadge tbadge-${g.t2}" style="font-size:1rem;margin-top:.5rem">${t2.name}</span></a>
+      </div>
+    </div>
+
+    ${r ? `
+    <div class="flex justify-center gap-4 mt-4">
+      <div class="text-center">
+        ${+r.s1 > +r.s2 ? `<div class="res-win font-bold">🏆 Sieg</div>` : +r.s1 < +r.s2 ? `<div class="res-loss font-bold">Niederlage</div>` : `<div class="res-draw font-bold">Unentschieden</div>`}
+        <div class="text-xs text-muted">${t1.name}</div>
+      </div>
+    </div>` : ''}
+
+    <div class="mt-6 flex justify-center gap-3 flex-wrap">
+      <button class="btn btn-warning" onclick="openScoreModal(${id})">
+        🟡 ${r ? 'Ergebnis ändern' : 'Ergebnis eintragen'} (Schiedsrichter)
+      </button>
+      ${isAdmin() ? `<button class="btn btn-ghost btn-sm" onclick="adminClearResult(${id})">🗑️ Ergebnis löschen</button>` : ''}
+    </div>
+  </div>
+
+  ${r ? `
+  <div class="entry-log">
+    <div class="text-xs font-bold mb-1" style="color:var(--warning)">📋 Eintrag</div>
+    <div>Eingetragen von: <strong>${r.tutor || '–'}</strong> (${r.refTeam ? TEAMS[r.refTeam]?.name || r.refTeam : '–'})</div>
+    ${r.ts ? `<div class="text-xs text-muted mt-1">${new Date(r.ts).toLocaleString('de-DE')}</div>` : ''}
+  </div>` : ''}
+
+  <div class="card mt-4">
+    <div class="section-title mb-4">Andere Spiele dieser Runde</div>
+    ${GAMES.filter(x => x.round === g.round && x.id !== g.id).map(x => gameCardSmall(x, null)).join('')}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// VIEW: TOW
+// ═══════════════════════════════════════════════
+
+function viewTOW() {
+  const st = getState();
+  const b = st.towBracket;
+  const res = st.towResults;
+  const pl = st.towPlacements;
+
+  function towTeamBox(tid) {
+    if (!tid) return `<div class="text-muted text-sm">TBD</div>`;
+    return `<div>${tbadgeShort(tid)}</div>`;
+  }
+
+  function towMatchBox(matchId, t1, t2, label, time) {
+    const r = res[matchId];
+    const winner = r ? r.winner : null;
+    return `
+    <div class="bracket-box ${winner ? 'winner' : ''}">
+      <div class="text-xs text-muted mb-2">${label} · ${time} Uhr</div>
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center justify-between gap-2 ${winner === t1 ? 'font-bold' : ''}">
+          ${t1 ? towTeamBox(t1) : '<span class="text-muted">TBD</span>'}
+          ${winner === t1 ? '<span class="res-win text-xs">🏆</span>' : ''}
+        </div>
+        <div class="text-center text-muted text-xs">VS</div>
+        <div class="flex items-center justify-between gap-2 ${winner === t2 ? 'font-bold' : ''}">
+          ${t2 ? towTeamBox(t2) : '<span class="text-muted">TBD</span>'}
+          ${winner === t2 ? '<span class="res-win text-xs">🏆</span>' : ''}
+        </div>
+      </div>
+      ${isAdmin() ? `<button class="btn btn-warning btn-sm w-full mt-3" onclick="openTOWModal('${matchId}','${t1||''}','${t2||''}')">Ergebnis</button>` : ''}
+    </div>`;
+  }
+
+  // Auto-fill SF losers/winners into 3rd/final
+  const sf1w = res.sf1?.winner, sf1l = [b.sf1t1,b.sf1t2].find(x => x !== sf1w);
+  const sf2w = res.sf2?.winner, sf2l = [b.sf2t1,b.sf2t2].find(x => x !== sf2w);
+  const thirdT1 = sf1l || null, thirdT2 = sf2l || null;
+  const finalT1 = sf1w || null, finalT2 = sf2w || null;
+
+  return `
+  <div class="page-title">🪢 Tug of War</div>
+  <div class="page-sub">Seilziehen-Turnier · Halbfinale + Finale · Platzierungspunkte: 1.=4Pkt · 2.=3Pkt · 3.=2Pkt · 4.=1Pkt</div>
+
+  <div class="alert alert-info mb-6">
+    <strong>Halbfinals</strong> werden nach den regulären Spielen ausgetragen. Die Paarungen basieren auf der Gesamtrangliste (1. vs 4. · 2. vs 3.).
+  </div>
+
+  <div class="card mb-6">
+    <div class="section-title mb-4">Bracket</div>
+    <div style="display:grid;grid-template-columns:1fr 60px 1fr;gap:1rem;align-items:center;overflow-x:auto">
+      <div class="flex flex-col gap-3">
+        <div>
+          <div class="text-xs text-muted mb-1 font-bold">HALBFINALE (15:30 Uhr)</div>
+          ${towMatchBox('sf1', b.sf1t1, b.sf1t2, 'HF1', '15:30')}
+        </div>
+        <div class="mt-4">
+          ${towMatchBox('sf2', b.sf2t1, b.sf2t2, 'HF2', '15:30')}
+        </div>
+      </div>
+
+      <div class="text-center text-muted" style="font-size:2rem">→</div>
+
+      <div class="flex flex-col gap-3">
+        <div>
+          <div class="text-xs text-muted mb-1 font-bold">FINALE (16:00 Uhr)</div>
+          ${towMatchBox('final', finalT1, finalT2, 'Finale', '16:00')}
+        </div>
+        <div class="mt-4">
+          <div class="text-xs text-muted mb-1 font-bold">PLATZ 3 (16:00 Uhr)</div>
+          ${towMatchBox('third', thirdT1, thirdT2, 'Platz 3', '16:00')}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  ${Object.keys(pl).length > 0 ? `
+  <div class="card">
+    <div class="section-title mb-4">🏆 Endplatzierungen</div>
+    <div class="grid-4">
+      ${[1,2,3,4].map(place => {
+        const tid = Object.entries(pl).find(([,v]) => v === place)?.[0];
+        const medals = ['🥇','🥈','🥉','4.'];
+        const bonusPts = [4,3,2,1];
+        return `<div class="stat-card">
+          <div style="font-size:2rem">${medals[place-1]}</div>
+          <div class="mt-2">${tid ? tbadge(tid) : '<span class="text-muted">TBD</span>'}</div>
+          <div class="stat-lbl mt-2">+${bonusPts[place-1]} Bonus-Punkte</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>` : ''}
+
+  ${isAdmin() ? `
+  <div class="card mt-4" style="border-color:var(--warning)">
+    <div class="section-title mb-4">⚙️ Admin: Halbfinale-Paarungen setzen</div>
+    <div class="grid-2 gap-4">
+      <div>
+        <div class="form-label">HF1 – Team 1</div>
+        <select class="form-input" id="sf1t1-sel">
+          ${Object.values(TEAMS).map(t => `<option value="${t.id}" ${b.sf1t1===t.id?'selected':''}>${t.emoji} ${t.name}</option>`).join('')}
+        </select>
+        <div class="form-label mt-2">HF1 – Team 2</div>
+        <select class="form-input" id="sf1t2-sel">
+          ${Object.values(TEAMS).map(t => `<option value="${t.id}" ${b.sf1t2===t.id?'selected':''}>${t.emoji} ${t.name}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <div class="form-label">HF2 – Team 1</div>
+        <select class="form-input" id="sf2t1-sel">
+          ${Object.values(TEAMS).map(t => `<option value="${t.id}" ${b.sf2t1===t.id?'selected':''}>${t.emoji} ${t.name}</option>`).join('')}
+        </select>
+        <div class="form-label mt-2">HF2 – Team 2</div>
+        <select class="form-input" id="sf2t2-sel">
+          ${Object.values(TEAMS).map(t => `<option value="${t.id}" ${b.sf2t2===t.id?'selected':''}>${t.emoji} ${t.name}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary mt-4" onclick="saveTOWBracket()">💾 Paarungen speichern</button>
+  </div>` : ''}`;
+}
+
+// ═══════════════════════════════════════════════
+// VIEW: REFEREES
+// ═══════════════════════════════════════════════
+
+function viewReferees() {
+  const st = getState();
+  const refs = st.refAssignments || {};
+
+  const allSlots = [
+    { label:'🔧 Aufbau', time:'11:00–11:30', notes:'Felder aufbauen, Materialien bereitstellen' },
+    ...GAMES.map(g => ({
+      gameId: g.id,
+      label: `Runde ${g.round} – ${g.field}`,
+      time: `${g.time}–${g.timeEnd}`,
+      sport: g.sport,
+      teams: `${TEAMS[g.t1].emoji} ${TEAMS[g.t1].name} vs ${TEAMS[g.t2].emoji} ${TEAMS[g.t2].name}`,
+      notes: refs[g.id] || '–',
+    })),
+    { label:'🪢 Tug of War HF1', time:'15:30–15:45', notes: refs['tow_sf1'] || '–' },
+    { label:'🪢 Tug of War HF2', time:'15:30–15:45', notes: refs['tow_sf2'] || '–' },
+    { label:'🪢 Tug of War Finale', time:'16:00–16:30', notes: refs['tow_final'] || '–' },
+    { label:'🧹 Abbau', time:'16:30–17:00', notes:'Felder abbauen, Materialien einsammeln' },
+  ];
+
+  return `
+  <div class="page-title">🟡 Schiedsrichterplan</div>
+  <div class="page-sub">Alle Schiedsrichterschichten im Überblick · Passwort: wird vom Admin verteilt</div>
+
+  <div class="alert alert-info mb-6">
+    <strong>Passwort für Schiedsrichter:</strong> Wird separat vom Organisationsteam verteilt. Um Ergebnisse einzutragen, auf der Spielseite auf "Ergebnis eintragen" klicken.
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="table-wrap">
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Zeit</th>
+            <th>Schicht</th>
+            <th>Sportart</th>
+            <th>Teams</th>
+            <th>Schiedsrichter</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${allSlots.map(s => `
+          <tr>
+            <td class="font-bold text-sm" style="white-space:nowrap">${s.time}</td>
+            <td class="font-bold">${s.label}</td>
+            <td>${s.sport ? sbadge(s.sport) : '–'}</td>
+            <td class="text-sm text-muted">${s.teams || s.notes}</td>
+            <td>
+              ${s.gameId !== undefined
+                ? `<span class="${refs[s.gameId] ? 'font-bold' : 'text-muted'}">${refs[s.gameId] || 'Nicht zugeteilt'}</span>`
+                : `<span class="text-muted">${s.notes}</span>`}
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-3 mt-6">
+    <div class="stat-card">
+      <div class="stat-val">${GAMES.length}</div>
+      <div class="stat-lbl">Spiele gesamt</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">${GAMES.length + 3}</div>
+      <div class="stat-lbl">Schiri-Schichten</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">3</div>
+      <div class="stat-lbl">Sportarten</div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// VIEW: ADMIN
+// ═══════════════════════════════════════════════
+
+function viewAdmin() {
+  if (!isAdmin()) return viewAdminLogin();
+
+  const st = getState();
+  const standings = calcStandings();
+
+  return `
+  <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+    <div>
+      <div class="page-title">⚙️ Admin-Panel</div>
+      <div class="page-sub" style="margin-bottom:0">Vollständige Kontrolle über Ergebnisse und Einstellungen</div>
+    </div>
+    <button class="btn btn-ghost" onclick="adminLogout()">🚪 Abmelden</button>
+  </div>
+
+  <!-- STANDINGS -->
+  <div class="card mb-6">
+    <div class="section-title mb-4">🏆 Gesamtrangliste</div>
+    <div class="table-wrap">
+      <table class="standings-table">
+        <thead><tr>
+          <th>#</th><th>Team</th><th>Sp.</th><th>S</th><th>U</th><th>N</th>
+          <th>Tore</th><th>TD</th><th>Spielpkt</th><th>TOW-Bonus</th><th>GESAMT</th>
+        </tr></thead>
+        <tbody>
+          ${standings.map((t, i) => `
+          <tr>
+            <td><span class="rank-badge rank-${i<3?i+1:'o'}">${i<3?['🥇','🥈','🥉'][i]:i+1}</span></td>
+            <td>${tbadge(t.id)}</td>
+            <td>${t.played}</td>
+            <td class="res-win font-bold">${t.w}</td>
+            <td class="res-draw">${t.d}</td>
+            <td class="res-loss">${t.l}</td>
+            <td>${t.gf}:${t.ga}</td>
+            <td class="${t.gf-t.ga >= 0 ? 'res-win' : 'res-loss'}">${t.gf-t.ga > 0 ? '+' : ''}${t.gf-t.ga}</td>
+            <td>${t.pts}</td>
+            <td class="font-bold" style="color:var(--warning)">${t.towPts || 0}</td>
+            <td class="font-black text-xl" style="color:var(--primary)">${t.total}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ALL GAME RESULTS -->
+  <div class="card mb-6">
+    <div class="section-header">
+      <div class="section-title">📋 Alle Spielergebnisse</div>
+    </div>
+    <div class="table-wrap">
+      <table class="ref-table">
+        <thead><tr>
+          <th>Runde</th><th>Zeit</th><th>Sport</th><th>Team 1</th><th>Ergebnis</th><th>Team 2</th><th>Eingetragen</th><th>Aktionen</th>
+        </tr></thead>
+        <tbody>
+          ${GAMES.map(g => {
+            const r = resultOf(g.id);
+            return `
+            <tr>
+              <td>${g.round}</td>
+              <td class="text-sm" style="white-space:nowrap">${g.time}</td>
+              <td>${sbadge(g.sport)}</td>
+              <td>${tbadgeShort(g.t1)}</td>
+              <td class="font-black text-center" style="white-space:nowrap">
+                ${r ? `${r.s1} : ${r.s2}` : '<span class="text-muted">–:–</span>'}
+              </td>
+              <td>${tbadgeShort(g.t2)}</td>
+              <td class="text-xs text-muted">${r ? (r.tutor || '–') : '–'}</td>
+              <td style="white-space:nowrap">
+                <button class="btn btn-warning btn-sm" onclick="openScoreModal(${g.id})">✏️</button>
+                ${r ? `<button class="btn btn-danger btn-sm" onclick="adminClearResult(${g.id})">🗑️</button>` : ''}
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- REFEREE ASSIGNMENTS -->
+  <div class="card mb-6">
+    <div class="section-title mb-4">🟡 Schiedsrichter zuteilen</div>
+    <div class="grid-2 gap-3">
+      ${GAMES.map(g => `
+      <div class="card-sm">
+        <div class="flex items-center gap-2 mb-2">
+          ${sbadge(g.sport)}
+          <span class="text-xs text-muted">${g.time} · ${g.field}</span>
+        </div>
+        <div class="flex items-center gap-2 mb-2">
+          ${tbadgeShort(g.t1)} <span class="text-muted">vs</span> ${tbadgeShort(g.t2)}
+        </div>
+        <input type="text" class="form-input" placeholder="Schiedsrichter Name..."
+          value="${(st.refAssignments||{})[g.id] || ''}"
+          onchange="saveRefAssignment(${g.id}, this.value)">
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- TOW PLACEMENTS -->
+  <div class="card mb-6">
+    <div class="section-title mb-4">🪢 Tug of War Platzierungen manuell setzen</div>
+    <div class="grid-4">
+      ${[1,2,3,4].map(place => {
+        const curVal = Object.entries(st.towPlacements||{}).find(([,v]) => v === place)?.[0] || '';
+        return `
+        <div>
+          <div class="form-label">${['🥇','🥈','🥉','4.'][place-1]} Platz</div>
+          <select class="form-input" onchange="saveTOWPlacement(${place}, this.value)">
+            <option value="">– kein –</option>
+            ${Object.values(TEAMS).map(t =>
+              `<option value="${t.id}" ${curVal===t.id?'selected':''}>${t.emoji} ${t.name}</option>`
+            ).join('')}
+          </select>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="card mb-6">
+    <div class="section-title mb-4">🛠️ Einstellungen</div>
+    <div class="grid-2 gap-4">
+      <div class="form-group">
+        <label class="form-label">Event-Name</label>
+        <input type="text" class="form-input" id="set-name" value="${st.settings.eventName}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Event-Datum</label>
+        <input type="date" class="form-input" id="set-date" value="${st.settings.eventDate}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Schiedsrichter-Passwort</label>
+        <input type="text" class="form-input" id="set-refpw" value="${st.settings.refPw}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Admin-Passwort</label>
+        <input type="text" class="form-input" id="set-adminpw" value="${st.settings.adminPw}">
+      </div>
+    </div>
+    <button class="btn btn-primary mt-2" onclick="saveSettings()">💾 Einstellungen speichern</button>
+  </div>
+
+  <div class="card mb-6" style="border-color:var(--danger)">
+    <div class="section-title mb-2" style="color:var(--danger)">⚠️ Gefahrenzone</div>
+    <div class="text-muted text-sm mb-4">Alle Ergebnisse und Daten werden unwiderruflich gelöscht.</div>
+    <button class="btn btn-danger" onclick="adminResetAll()">🗑️ Alle Daten zurücksetzen</button>
+  </div>`;
+}
+
+function viewAdminLogin() {
+  return `
+  <div style="max-width:380px;margin:4rem auto">
+    <div class="card">
+      <div class="text-center mb-6">
+        <div style="font-size:3rem">⚙️</div>
+        <div class="text-2xl font-bold mt-2">Admin-Login</div>
+        <div class="text-muted text-sm mt-1">Nur für Organisatoren</div>
+      </div>
+      <div id="admin-login-err"></div>
+      <div class="form-group">
+        <label class="form-label">Admin-Passwort</label>
+        <input type="password" class="form-input" id="admin-pw-inp" placeholder="Passwort eingeben..."
+          onkeydown="if(event.key==='Enter') adminLogin()">
+      </div>
+      <button class="btn btn-primary w-full" onclick="adminLogin()">🔓 Anmelden</button>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════════
+
+function openScoreModal(gameId) {
+  const g = GAMES.find(x => x.id === gameId);
+  if (!g) return;
+  const r = resultOf(gameId);
+  const sp = SPORTS[g.sport];
+  const adminMode = isAdmin();
+
+  document.getElementById('modal-content').innerHTML = `
+  <div class="modal-title">🟡 ${r ? 'Ergebnis ändern' : 'Ergebnis eintragen'}</div>
+
+  <div class="flex items-center gap-3 justify-center mb-6">
+    ${tbadge(g.t1)} <span class="text-muted">vs</span> ${tbadge(g.t2)}
+  </div>
+  <div class="text-center mb-6">
+    ${sbadge(g.sport)} <span class="text-muted text-sm">${g.time} Uhr · ${g.field}</span>
+  </div>
+
+  <div id="score-modal-err"></div>
+
+  ${!adminMode ? `
+  <div class="form-group">
+    <label class="form-label">Dein Team (Schiedsrichter)</label>
+    <select class="form-input" id="m-refteam">
+      <option value="">– bitte wählen –</option>
+      ${Object.values(TEAMS).map(t => `<option value="${t.id}">${t.emoji} ${t.name}</option>`).join('')}
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Tutor-Name</label>
+    <input type="text" class="form-input" id="m-tutor" placeholder="z.B. Frau Schmidt" value="${r?.tutor||''}">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Schiedsrichter-Passwort</label>
+    <input type="password" class="form-input" id="m-refpw" placeholder="Passwort...">
+  </div>` : `
+  <div class="alert alert-info mb-4">Admin-Modus: Kein Passwort erforderlich</div>
+  <input type="hidden" id="m-refteam" value="admin">
+  <input type="hidden" id="m-tutor" value="Admin">
+  <input type="hidden" id="m-refpw" value="">
+  `}
+
+  <div class="form-group">
+    <label class="form-label">Ergebnis</label>
+    <div class="flex items-center gap-3">
+      <div class="flex-col items-center text-center" style="flex:1">
+        <div class="text-xs text-muted mb-1">${TEAMS[g.t1].emoji} ${TEAMS[g.t1].name}</div>
+        <input type="number" class="form-input score-inp" id="m-s1" min="0" max="99" value="${r?.s1??''}">
+      </div>
+      <div class="font-black text-2xl text-muted">:</div>
+      <div class="flex-col items-center text-center" style="flex:1">
+        <div class="text-xs text-muted mb-1">${TEAMS[g.t2].emoji} ${TEAMS[g.t2].name}</div>
+        <input type="number" class="form-input score-inp" id="m-s2" min="0" max="99" value="${r?.s2??''}">
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-3 mt-6">
+    <button class="btn btn-success w-full" onclick="submitScore(${gameId})">✅ Speichern</button>
+    <button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+  </div>`;
+
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+function openTOWModal(matchId, t1, t2) {
+  if (!t1 || !t2) return alert('Bitte erst die Halbfinal-Paarungen setzen.');
+  document.getElementById('modal-content').innerHTML = `
+  <div class="modal-title">🪢 TOW Ergebnis: ${TOW.find(x=>x.id===matchId)?.label || matchId}</div>
+  <div class="flex justify-center gap-4 mb-6">
+    ${tbadge(t1)} <span class="text-muted">vs</span> ${tbadge(t2)}
+  </div>
+  <div class="form-group">
+    <label class="form-label">Gewinner</label>
+    <select class="form-input" id="tow-winner">
+      <option value="">– bitte wählen –</option>
+      <option value="${t1}">${TEAMS[t1]?.emoji} ${TEAMS[t1]?.name}</option>
+      <option value="${t2}">${TEAMS[t2]?.emoji} ${TEAMS[t2]?.name}</option>
+    </select>
+  </div>
+  <div class="flex gap-3 mt-4">
+    <button class="btn btn-success w-full" onclick="submitTOWResult('${matchId}')">✅ Speichern</button>
+    <button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+  </div>`;
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-ov').classList.remove('open');
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-ov')) closeModal();
+}
+
+// ═══════════════════════════════════════════════
+// EVENT HANDLERS / ACTIONS
+// ═══════════════════════════════════════════════
+
+function submitScore(gameId) {
+  const st = getState();
+  const adminMode = isAdmin();
+  const refTeam = document.getElementById('m-refteam').value;
+  const tutor = document.getElementById('m-tutor').value.trim();
+  const pw = document.getElementById('m-refpw').value;
+  const s1 = document.getElementById('m-s1').value;
+  const s2 = document.getElementById('m-s2').value;
+  const errEl = document.getElementById('score-modal-err');
+
+  if (!adminMode) {
+    if (!refTeam) { errEl.innerHTML = `<div class="alert alert-error">Bitte wähle dein Team aus.</div>`; return; }
+    if (!tutor) { errEl.innerHTML = `<div class="alert alert-error">Bitte gib den Tutor-Namen ein.</div>`; return; }
+    if (pw !== st.settings.refPw) { errEl.innerHTML = `<div class="alert alert-error">Falsches Passwort.</div>`; return; }
+  }
+  if (s1 === '' || s2 === '') { errEl.innerHTML = `<div class="alert alert-error">Bitte beide Scores eingeben.</div>`; return; }
+
+  updateState(st => {
+    st.results[gameId] = { s1: +s1, s2: +s2, refTeam, tutor, ts: new Date().toISOString() };
+  });
+  closeModal();
+  route();
+}
+
+function adminClearResult(gameId) {
+  if (!isAdmin()) return;
+  if (!confirm('Ergebnis wirklich löschen?')) return;
+  updateState(st => { delete st.results[gameId]; });
+  route();
+}
+
+function adminLogin() {
+  const pw = document.getElementById('admin-pw-inp').value;
+  const st = getState();
+  if (pw === st.settings.adminPw) {
+    setAdmin(true);
+    route();
+  } else {
+    document.getElementById('admin-login-err').innerHTML = `<div class="alert alert-error">Falsches Passwort.</div>`;
+  }
+}
+
+function adminLogout() {
+  setAdmin(false);
+  route();
+}
+
+function adminResetAll() {
+  if (!confirm('ACHTUNG: Alle Daten (Ergebnisse, Paarungen, Einstellungen) werden GELÖSCHT. Fortfahren?')) return;
+  localStorage.removeItem(SK);
+  setAdmin(false);
+  alert('Alle Daten wurden zurückgesetzt.');
+  route();
+}
+
+function saveSettings() {
+  updateState(st => {
+    st.settings.eventName = document.getElementById('set-name').value;
+    st.settings.eventDate = document.getElementById('set-date').value;
+    st.settings.refPw = document.getElementById('set-refpw').value;
+    st.settings.adminPw = document.getElementById('set-adminpw').value;
+  });
+  buildTeamDropdown();
+  alert('Einstellungen gespeichert!');
+  route();
+}
+
+function saveRefAssignment(gameId, name) {
+  updateState(st => {
+    st.refAssignments = st.refAssignments || {};
+    st.refAssignments[gameId] = name;
+  });
+}
+
+function saveTOWPlacement(place, teamId) {
+  updateState(st => {
+    st.towPlacements = st.towPlacements || {};
+    // Clear this place from any previous holder, and clear teamId from any previous place
+    Object.keys(st.towPlacements).forEach(k => {
+      if (st.towPlacements[k] === place || k === teamId) delete st.towPlacements[k];
+    });
+    if (teamId) st.towPlacements[teamId] = place;
+  });
+}
+
+function saveTOWBracket() {
+  updateState(st => {
+    st.towBracket.sf1t1 = document.getElementById('sf1t1-sel').value;
+    st.towBracket.sf1t2 = document.getElementById('sf1t2-sel').value;
+    st.towBracket.sf2t1 = document.getElementById('sf2t1-sel').value;
+    st.towBracket.sf2t2 = document.getElementById('sf2t2-sel').value;
+  });
+  route();
+}
+
+function submitTOWResult(matchId) {
+  const winner = document.getElementById('tow-winner').value;
+  if (!winner) { alert('Bitte wähle einen Gewinner.'); return; }
+  updateState(st => {
+    st.towResults[matchId] = { winner };
+  });
+  closeModal();
+  route();
+}
+
+// ═══════════════════════════════════════════════
+// NAV HELPERS
+// ═══════════════════════════════════════════════
+
+function toggleMenu() {
+  document.getElementById('nav-links').classList.toggle('open');
+}
+
+function closeMenu() {
+  document.getElementById('nav-links').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════
+// BIND HANDLERS (called after each render)
+// ═══════════════════════════════════════════════
+
+function bindHandlers() {
+  // Keyboard shortcut: Esc closes modal
+  document.onkeydown = (e) => { if (e.key === 'Escape') closeModal(); };
+}
+
+// ═══════════════════════════════════════════════
+// KEYBOARD SHORTCUT: Escape closes mobile menu
+// ═══════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeMenu(); closeModal(); }
+});
+</script>
+</body>
+</html>
