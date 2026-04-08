@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
+axios.defaults.baseURL = "https://pa-s26-api-8kup.onrender.com:5001";
+// axios.defaults.baseURL = "http://localhost:5001";
+
 const Ctx = createContext(null);
 export const useApp = () => useContext(Ctx);
 
