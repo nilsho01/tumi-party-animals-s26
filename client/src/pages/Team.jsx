@@ -1,12 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
-import { GAMES, TEAMS } from '../data/constants';
+import { GAMES, TEAMS, TOW_MATCHES } from '../data/constants';
 import { useApp } from '../context/AppContext';
 import GameCard from '../components/GameCard';
 
 export default function Team() {
   const { id } = useParams();
   const team = TEAMS[id];
-  const { getResult } = useApp();
+  const { getResult, towData } = useApp();
 
   if (!team) return (
     <div className="page">
@@ -15,6 +15,7 @@ export default function Team() {
   );
 
   const games  = GAMES.filter(g => g.t1 === id || g.t2 === id);
+  const refGames = GAMES.filter(g => g.refTeam === id);
   const past   = games.filter(g => getResult(g.id));
   const future = games.filter(g => !getResult(g.id));
 
@@ -28,6 +29,11 @@ export default function Team() {
     else if (myS < oppS) l++;
     else d++;
   });
+
+  // TOW placement für dieses Team
+  const towPlacement = towData?.placements?.find(p => p.teamId === id);
+  const towMedals = { 1: '🥇', 2: '🥈', 3: '🥉', 4: '4.' };
+  const towBonus  = { 1: 4,    2: 3,    3: 2,    4: 1   };
 
   return (
     <div className="page">
@@ -52,7 +58,7 @@ export default function Team() {
       </div>
 
       {/* Stats */}
-      <div className="grid-4 mb-8">
+      <div className="grid-4 mb-4">
         <div className="stat-card">
           <div className="stat-val">{past.length}</div>
           <div className="stat-lbl">Played</div>
@@ -71,6 +77,38 @@ export default function Team() {
         </div>
       </div>
 
+      {/* Goals + TOW */}
+      <div className="grid-4 mb-8">
+        <div className="stat-card">
+          <div className="stat-val">{gf}</div>
+          <div className="stat-lbl">Points For</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-val">{ga}</div>
+          <div className="stat-lbl">Points Against</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-val" style={{ color: gf - ga > 0 ? '#16a34a' : gf - ga < 0 ? '#dc2626' : undefined }}>
+            {gf - ga > 0 ? '+' : ''}{gf - ga}
+          </div>
+          <div className="stat-lbl">Difference</div>
+        </div>
+        <div className="stat-card">
+          {towPlacement ? (
+            <>
+              <div className="stat-val">{towMedals[towPlacement.place]}</div>
+              <div className="stat-lbl">ToW · +{towBonus[towPlacement.place]} pts</div>
+            </>
+          ) : (
+            <>
+              <div className="stat-val text-muted">🪢</div>
+              <div className="stat-lbl">Tug of War · 16:30</div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Games */}
       <div className="grid-2 gap-6">
         {future.length > 0 && (
           <div>
@@ -93,6 +131,18 @@ export default function Team() {
           </div>
         )}
       </div>
+
+      {/* Ref duties */}
+      {refGames.length > 0 && (
+        <div className="mt-6">
+          <div className="section-hdr">
+            <div className="section-title">🟨 Referee Duties</div>
+          </div>
+          <div className="flex flex-col gap-3">
+            {refGames.map(g => <GameCard key={g.id} game={g} dimmed />)}
+          </div>
+        </div>
+      )}
 
       {games.length === 0 && (
         <div className="alert alert-info">No games found.</div>

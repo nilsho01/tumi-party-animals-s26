@@ -7,19 +7,28 @@ function nowRound() {
   const now = new Date();
   const mins = now.getHours() * 60 + now.getMinutes();
   const slots = [
-    { round: 1, from: 11*60+30, to: 12*60 },
-    { round: 2, from: 12*60,    to: 12*60+30 },
-    { round: 3, from: 12*60+30, to: 13*60 },
-    { round: 4, from: 14*60,    to: 14*60+30 },
-    { round: 5, from: 14*60+30, to: 15*60 },
-    { round: 6, from: 15*60,    to: 15*60+30 },
+    { round: 1, from: 11*60+30, to: 12*60      },
+    { round: 2, from: 12*60,    to: 12*60+30   },
+    { round: 3, from: 12*60+30, to: 13*60      },
+    { round: 4, from: 14*60,    to: 14*60+30   },
+    { round: 5, from: 14*60+30, to: 15*60      },
+    { round: 6, from: 15*60,    to: 15*60+30   },
+    { round: 7, from: 15*60+30, to: 16*60      },
+    { round: 8, from: 16*60,    to: 16*60+30   },
   ];
   return slots.find(s => mins >= s.from && mins < s.to)?.round || null;
+}
+
+function isTowLive() {
+  const now = new Date();
+  const mins = now.getHours() * 60 + now.getMinutes();
+  return mins >= 16*60+30 && mins < 17*60+10;
 }
 
 export default function Home() {
   const { results, settings } = useApp();
   const curRound = nowRound();
+  const towLive  = isTowLive();
   const played   = GAMES.filter(g => results.some(r => r.gameId === g.id)).length;
   const nextGame = GAMES.find(g => !results.some(r => r.gameId === g.id));
 
@@ -30,11 +39,8 @@ export default function Home() {
 
   return (
     <div className="page">
-      {/* Hero with sports photo */}
-      <div
-        className="hero mb-8"
-        style={{ backgroundImage: 'url(/sportsday-hero.jpg)' }}
-      >
+      {/* Hero */}
+      <div className="hero mb-8" style={{ backgroundImage: 'url(/sportsday-hero.jpg)' }}>
         {settings.eventDate && <div className="hero-eyebrow">📅 {formatDate(settings.eventDate)}</div>}
         <h1 className="hero-title">{settings.eventName}</h1>
         <p className="hero-sub">4 Teams · Volleyball · Ultimate Frisbee · Dodgeball · Tug of War</p>
@@ -53,7 +59,13 @@ export default function Home() {
           🔴 <strong>Round {curRound} is live right now!</strong>
         </div>
       )}
-      {nextGame && !curRound && (
+      {towLive && (
+        <div className="alert alert-warn mb-6">
+          🪢 <strong>Tug of War is live right now!</strong>{' '}
+          <Link to="/tow" style={{ marginLeft: '0.5rem', fontWeight: 600 }}>View bracket →</Link>
+        </div>
+      )}
+      {nextGame && !curRound && !towLive && (
         <div className="alert alert-info mb-6 flex items-center gap-3">
           <div style={{ flex: 1 }}>
             <strong>Next game:</strong> {nextGame.time} — Round {nextGame.round} · {nextGame.field}
@@ -78,11 +90,11 @@ export default function Home() {
           <div className="stat-lbl">Remaining</div>
         </div>
         <div className="stat-card">
-          <div className="stat-val">6</div>
-          <div className="stat-lbl">Games per Team</div>
+          <div className="stat-val">{GAMES.length}</div>
+          <div className="stat-lbl">Total Games</div>
         </div>
         <div className="stat-card">
-          <div className="stat-val">3</div>
+          <div className="stat-val">4</div>
           <div className="stat-lbl">Sports</div>
         </div>
       </div>
@@ -112,6 +124,20 @@ export default function Home() {
               <GameCard key={g.id} game={g} highlight={curRound === g.round} />
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* TOW teaser */}
+      <div className="card mt-6" style={{ borderColor: '#d8b4fe', background: '#faf5ff' }}>
+        <div className="flex items-center gap-3">
+          <span style={{ fontSize: '1.75rem' }}>🪢</span>
+          <div>
+            <div className="font-bold">Tug of War · 16:30 – 17:10</div>
+            <div className="text-sm text-muted">
+              SF1 16:30 · SF2 16:40 · 3rd Place 16:50 · Final 17:00
+            </div>
+          </div>
+          <Link to="/tow" className="btn btn-outline btn-sm ml-auto">View bracket →</Link>
         </div>
       </div>
     </div>

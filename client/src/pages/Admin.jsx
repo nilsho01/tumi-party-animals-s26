@@ -4,6 +4,22 @@ import { useApp } from '../context/AppContext';
 import { TeamBadge, TeamBadgeShort, SportBadge } from '../components/TeamBadge';
 import ScoreModal from '../components/ScoreModal';
 
+function nowRound() {
+  const now  = new Date();
+  const mins = now.getHours() * 60 + now.getMinutes();
+  const slots = [
+    { round: 1, from: 11*60+30, to: 12*60    },
+    { round: 2, from: 12*60,    to: 12*60+30 },
+    { round: 3, from: 12*60+30, to: 13*60    },
+    { round: 4, from: 14*60,    to: 14*60+30 },
+    { round: 5, from: 14*60+30, to: 15*60    },
+    { round: 6, from: 15*60,    to: 15*60+30 },
+    { round: 7, from: 15*60+30, to: 16*60    },
+    { round: 8, from: 16*60,    to: 16*60+30 },
+  ];
+  return slots.find(s => mins >= s.from && mins < s.to)?.round || null;
+}
+
 // ── Login screen ───────────────────────────────────────
 function AdminLogin() {
   const { login } = useApp();
@@ -62,7 +78,7 @@ function AdminPanel() {
         4: settings.towBonus[4] ?? settings.towBonus['4'] ?? 1 }
     : DEFAULT_BONUS;
 
-  const [editGame, setEditGame] = useState(null);
+  const [editGame, setEditGame]         = useState(null);
   const [settingsForm, setSettingsForm] = useState({
     eventName: settings.eventName || '',
     eventDate: settings.eventDate || '',
@@ -72,16 +88,17 @@ function AdminPanel() {
   });
   const [settingsSaved, setSettingsSaved] = useState(false);
 
-  const standings = calcStandings(results, towData.placements, currentBonus);
+  const standings  = calcStandings(results, towData.placements, currentBonus);
+  const curRound   = nowRound();
+  const played     = results.length;
+  const medals     = ['🥇', '🥈', '🥉', '4th'];
+  const rankClass  = i => i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-o';
 
   const handleSaveSettings = async () => {
     await saveSettings(settingsForm);
     setSettingsSaved(true);
     setTimeout(() => setSettingsSaved(false), 3000);
   };
-
-  const medals    = ['🥇', '🥈', '🥉', '4th'];
-  const rankClass = i => i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-o';
 
   return (
     <div className="page">
@@ -92,6 +109,33 @@ function AdminPanel() {
           <p className="page-sub" style={{ marginBottom: 0 }}>Full control over results and settings</p>
         </div>
         <button className="btn btn-ghost" onClick={logout}>Log out</button>
+      </div>
+
+      {/* Live banner */}
+      {curRound && (
+        <div className="alert alert-warn mb-6">
+          🔴 <strong>Round {curRound} is live right now!</strong> — {GAMES.filter(g => g.round === curRound).length} games running
+        </div>
+      )}
+
+      {/* Quick stats */}
+      <div className="grid-4 mb-6">
+        <div className="stat-card">
+          <div className="stat-val">{played}</div>
+          <div className="stat-lbl">Results Entered</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-val">{GAMES.length - played}</div>
+          <div className="stat-lbl">Remaining</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-val">{curRound ?? '–'}</div>
+          <div className="stat-lbl">Current Round</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-val">{towData.placements?.length ?? 0}/4</div>
+          <div className="stat-lbl">TOW Placements</div>
+        </div>
       </div>
 
       {/* ── Overall Standings ── */}
@@ -113,7 +157,7 @@ function AdminPanel() {
                 <th>Goals</th>
                 <th>GD</th>
                 <th>Pts</th>
-                <th>TOW Bonus</th>
+                <th>TOW</th>
                 <th>Total</th>
               </tr>
             </thead>
@@ -166,11 +210,19 @@ function AdminPanel() {
             </thead>
             <tbody>
               {GAMES.map(g => {
-                const r = results.find(r => r.gameId === g.id);
+                const r    = results.find(r => r.gameId === g.id);
                 const refT = TEAMS[g.refTeam];
+                const isLive = curRound === g.round;
                 return (
-                  <tr key={g.id}>
-                    <td className="font-bold">{g.round}</td>
+                  <tr key={g.id} style={isLive && !r ? { background: '#fefce8' } : undefined}>
+                    <td className="font-bold">
+                      {g.round}
+                      {isLive && !r && (
+                        <span style={{ marginLeft: '.3rem', fontSize: '.65rem', color: '#b45309', fontWeight: 700 }}>
+                          🔴
+                        </span>
+                      )}
+                    </td>
                     <td className="text-sm text-muted" style={{ whiteSpace: 'nowrap' }}>{g.time}</td>
                     <td><SportBadge sport={g.sport} /></td>
                     <td><TeamBadgeShort id={g.t1} /></td>
@@ -259,7 +311,9 @@ function AdminPanel() {
       {/* ── TOW Bonus Points ── */}
       <div className="card mb-6">
         <div className="section-title mb-1">🪢 Tug of War — Placement Points</div>
-        <p className="text-muted text-sm mb-4">Points added to the overall standings based on TOW placement.</p>
+        <p className="text-muted text-sm mb-4">
+          TOW bracket starts at <strong>16:30</strong> · SF1 16:30 · SF2 16:40 · 3rd Place 16:50 · Final 17:00
+        </p>
         <div className="grid-4 gap-4">
           {[1, 2, 3, 4].map(place => (
             <div key={place} className="form-group" style={{ marginBottom: 0 }}>

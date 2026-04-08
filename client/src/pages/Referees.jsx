@@ -15,9 +15,9 @@ function RefLogin() {
   const [busy, setBusy]     = useState(false);
 
   const submit = async () => {
-    if (!teamId)   return setError('Please select your team.');
+    if (!teamId)      return setError('Please select your team.');
     if (!name.trim()) return setError('Please enter your name.');
-    if (!pw)       return setError('Please enter the referee password.');
+    if (!pw)          return setError('Please enter the referee password.');
     setBusy(true);
     const ok = await loginRef(pw, name.trim(), teamId).catch(() => false);
     if (!ok) { setError('Wrong password. Ask an organiser for the referee password.'); setBusy(false); }
@@ -37,12 +37,7 @@ function RefLogin() {
 
           <div className="form-group">
             <label className="form-label">Your Team</label>
-            <select
-              className="form-input"
-              value={teamId}
-              onChange={e => setTeamId(e.target.value)}
-              autoFocus
-            >
+            <select className="form-input" value={teamId} onChange={e => setTeamId(e.target.value)} autoFocus>
               <option value="">– select team –</option>
               {Object.values(TEAMS).map(t => (
                 <option key={t.id} value={t.id}>{t.emoji} {t.name}</option>
@@ -100,16 +95,13 @@ function RefDashboard() {
           <p className="page-sub" style={{ marginBottom: 0 }}>
             Logged in as{' '}
             {refTeam && (
-              <span
-                className="tbadge"
-                style={{
-                  background: refTeam.color + '20',
-                  color: refTeam.color,
-                  border: `1px solid ${refTeam.color}40`,
-                  fontSize: '.8rem',
-                  marginRight: '.25rem',
-                }}
-              >
+              <span className="tbadge" style={{
+                background: refTeam.color + '20',
+                color: refTeam.color,
+                border: `1px solid ${refTeam.color}40`,
+                fontSize: '.8rem',
+                marginRight: '.25rem',
+              }}>
                 {refTeam.emoji} {refTeam.name}
               </span>
             )}
@@ -123,7 +115,7 @@ function RefDashboard() {
         Click <strong>"Enter Score"</strong> on any game to submit the result. No password needed — you're already logged in.
       </div>
 
-      {[1, 2, 3, 4, 5, 6].map(r => {
+      {[1, 2, 3, 4, 5, 6, 7, 8].map(r => {
         const games = GAMES.filter(g => g.round === r);
         const g0 = games[0];
         return (
@@ -163,28 +155,22 @@ function RefDashboard() {
                       }
                     </div>
 
-                    {/* Assigned ref */}
+                    {/* Assigned ref team */}
                     <div className="text-xs text-muted" style={{ minWidth: 120 }}>
                       <span style={{ opacity: .6 }}>Ref: </span>
-                      <span
-                        className="tbadge"
-                        style={{
-                          background: refT?.color + '20',
-                          color: refT?.color,
-                          border: `1px solid ${refT?.color}40`,
-                          fontSize: '.7rem',
-                          padding: '.15rem .5rem',
-                        }}
-                      >
+                      <span className="tbadge" style={{
+                        background: refT?.color + '20',
+                        color: refT?.color,
+                        border: `1px solid ${refT?.color}40`,
+                        fontSize: '.7rem',
+                        padding: '.15rem .5rem',
+                      }}>
                         {refT?.emoji} {refT?.short}
                       </span>
                     </div>
 
                     {/* Action */}
-                    <button
-                      className="btn btn-warning btn-sm"
-                      onClick={() => setEditGame(g)}
-                    >
+                    <button className="btn btn-warning btn-sm" onClick={() => setEditGame(g)}>
                       {result ? 'Edit' : 'Enter Score'}
                     </button>
                   </div>
@@ -200,8 +186,10 @@ function RefDashboard() {
         <div className="flex items-center gap-3">
           <span style={{ fontSize: '1.75rem' }}>🪢</span>
           <div>
-            <div className="font-bold">Tug of War · 15:30 – 16:30</div>
-            <div className="text-sm text-muted">TOW results are entered separately by the admin.</div>
+            <div className="font-bold">Tug of War · 16:30 – 17:10</div>
+            <div className="text-sm text-muted">
+              SF1 16:30 · SF2 16:40 · 3rd Place 16:50 · Final 17:00 — Results are entered by the admin.
+            </div>
           </div>
           <Link to="/tow" className="btn btn-outline btn-sm ml-auto">View bracket →</Link>
         </div>
@@ -217,11 +205,12 @@ function AdminRefView() {
   const { getRef, saveRef } = useApp();
 
   const EXTRA_SLOTS = [
-    { id: 'setup',     label: 'Setup',             time: '11:00–11:30', sport: null },
-    { id: 'tow_sf1',  label: 'TOW – Semi-Final 1', time: '15:30–15:45', sport: 'tugofwar' },
-    { id: 'tow_sf2',  label: 'TOW – Semi-Final 2', time: '15:30–15:45', sport: 'tugofwar' },
-    { id: 'tow_final',label: 'TOW – Final',         time: '16:00–16:30', sport: 'tugofwar' },
-    { id: 'cleanup',  label: 'Cleanup',             time: '16:30–17:00', sport: null },
+    { id: 'setup',      label: 'Setup',             time: '11:00–11:30', sport: null },
+    { id: 'tow_sf1',   label: 'TOW – Semi-Final 1', time: '16:30–16:40', sport: 'tugofwar' },
+    { id: 'tow_sf2',   label: 'TOW – Semi-Final 2', time: '16:40–16:50', sport: 'tugofwar' },
+    { id: 'tow_third', label: 'TOW – 3rd Place',    time: '16:50–17:00', sport: 'tugofwar' },
+    { id: 'tow_final', label: 'TOW – Final',         time: '17:00–17:10', sport: 'tugofwar' },
+    { id: 'cleanup',   label: 'Cleanup',             time: '17:10–17:30', sport: null },
   ];
 
   const gameSlots = GAMES.map(g => ({
@@ -261,7 +250,9 @@ function AdminRefView() {
                     <td className="font-bold text-sm" style={{ whiteSpace: 'nowrap' }}>{slot.time}</td>
                     <td className="font-bold">{slot.label}</td>
                     <td>
-                      {slot.sport ? <SportBadge sport={slot.sport} /> : <span className="text-muted">–</span>}
+                      {slot.sport
+                        ? <SportBadge sport={slot.sport} />
+                        : <span className="text-muted">–</span>}
                     </td>
                     <td>
                       {slot.game
@@ -274,14 +265,11 @@ function AdminRefView() {
                     </td>
                     <td>
                       {refT
-                        ? <span
-                            className="tbadge"
-                            style={{
-                              background: refT.color + '20',
-                              color: refT.color,
-                              border: `1px solid ${refT.color}40`,
-                            }}
-                          >
+                        ? <span className="tbadge" style={{
+                            background: refT.color + '20',
+                            color: refT.color,
+                            border: `1px solid ${refT.color}40`,
+                          }}>
                             {refT.emoji} {refT.name}
                           </span>
                         : <span className="text-muted">–</span>}
@@ -310,7 +298,7 @@ function AdminRefView() {
           <div className="stat-lbl">Total Games</div>
         </div>
         <div className="stat-card">
-          <div className="stat-val">{GAMES.length + 5}</div>
+          <div className="stat-val">{GAMES.length + EXTRA_SLOTS.length}</div>
           <div className="stat-lbl">Total Shifts</div>
         </div>
         <div className="stat-card">

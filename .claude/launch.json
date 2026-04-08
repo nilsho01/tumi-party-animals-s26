@@ -1,0 +1,20 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "React Client (Vite)",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": [
+        "/Users/dev/Documents/PA/SportDay/.claude/worktrees/frosty-noyce/client/node_modules/vite/bin/vite.js",
+        "/Users/dev/Documents/PA/SportDay/.claude/worktrees/frosty-noyce/client"
+      ],
+      "port": 5173
+    },
+    {
+      "name": "Express Server",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["/Users/dev/Documents/PA/SportDay/.claude/worktrees/frosty-noyce/server/index.js"],
+      "port": 5001
+    }
+  ]
+}

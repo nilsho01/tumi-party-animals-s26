@@ -8,7 +8,7 @@ export default function TOW() {
   const { bracket, results, placements } = towData;
 
   const [bracketEdit, setBracketEdit] = useState({ ...bracket });
-  const [towModal, setTowModal]       = useState(null); // { matchId, t1, t2 }
+  const [towModal, setTowModal]       = useState(null);
   const [towWinner, setTowWinner]     = useState('');
   const [saving, setSaving]           = useState(false);
 
@@ -17,10 +17,14 @@ export default function TOW() {
 
   const sf1w = getWinner('sf1');
   const sf2w = getWinner('sf2');
-  const sf1l = [bracket.sf1t1, bracket.sf1t2].find(t => t !== sf1w);
-  const sf2l = [bracket.sf2t1, bracket.sf2t2].find(t => t !== sf2w);
-  const finalT1 = sf1w || null, finalT2 = sf2w || null;
-  const thirdT1 = sf1l || null, thirdT2 = sf2l || null;
+
+  // Finale und 3rd Place nur befüllen wenn SF gespielt wurde
+  const sf1l = sf1w ? [bracket.sf1t1, bracket.sf1t2].find(t => t !== sf1w) : null;
+  const sf2l = sf2w ? [bracket.sf2t1, bracket.sf2t2].find(t => t !== sf2w) : null;
+  const finalT1 = sf1w || null;
+  const finalT2 = sf2w || null;
+  const thirdT1 = sf1l || null;
+  const thirdT2 = sf2l || null;
 
   const openModal = (matchId, t1, t2) => {
     if (!t1 || !t2) return alert('Please set the semi-final pairings first.');
@@ -36,27 +40,41 @@ export default function TOW() {
     setSaving(false);
   };
 
-  const BracketMatch = ({ matchId, t1, t2, label, time }) => {
+  const BracketMatch = ({ matchId, t1, t2, label, time, locked }) => {
     const winner = getWinner(matchId);
     const isTbd = !t1 || !t2;
+    // locked = warten auf SF-Ergebnisse
     return (
       <div className={`bracket-match${winner ? ' winner' : ''}${isTbd ? ' tbd' : ''}`}>
         <div className="text-xs text-muted mb-2 font-bold">{label} · {time}</div>
         <div className="flex flex-col gap-2">
-          {[t1, t2].map((tid, i) => (
-            <div key={i} className={`flex items-center justify-between gap-2 ${winner === tid ? 'font-bold' : ''}`}>
-              {tid ? <TeamBadgeShort id={tid} /> : <span className="text-muted text-sm">TBD</span>}
-              {winner === tid && <span className="text-xs res-win">🏆</span>}
-            </div>
-          ))}
+          {isTbd ? (
+            <>
+              <div className="flex items-center gap-2">
+                <span className="text-muted text-sm">
+                  {locked ? '⏳ Waiting for Semi-Finals' : 'TBD'}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-muted text-sm"> </span>
+              </div>
+            </>
+          ) : (
+            [t1, t2].map((tid, i) => (
+              <div key={i} className={`flex items-center justify-between gap-2 ${winner === tid ? 'font-bold' : ''}`}>
+                <TeamBadgeShort id={tid} />
+                {winner === tid && <span className="text-xs res-win">🏆</span>}
+              </div>
+            ))
+          )}
         </div>
-        {isAdmin && (
+        {isAdmin && !locked && (
           <button
             className="btn btn-warning btn-sm w-full mt-3"
             onClick={() => openModal(matchId, t1, t2)}
             disabled={isTbd}
           >
-            Result
+            {isTbd ? '⏳ Waiting...' : 'Result'}
           </button>
         )}
       </div>
@@ -65,6 +83,9 @@ export default function TOW() {
 
   const medals = ['🥇', '🥈', '🥉', '4.'];
   const bonusPts = [4, 3, 2, 1];
+
+  // Finals sind gesperrt solange nicht beide SFs gespielt
+  const finalsLocked = !sf1w || !sf2w;
 
   return (
     <div className="page">
@@ -82,22 +103,41 @@ export default function TOW() {
       <div className="card mb-6">
         <div className="section-title mb-4">Bracket</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 48px 1fr', gap: '1rem', alignItems: 'center', overflowX: 'auto' }}>
+
+          {/* Semi-Finals */}
           <div className="flex flex-col gap-4">
             <div>
-              <div className="text-xs font-bold text-muted mb-1">SEMI-FINALS · 15:30</div>
-              <BracketMatch matchId="sf1" t1={bracket.sf1t1} t2={bracket.sf1t2} label="SF 1" time="15:30" />
+              <div className="text-xs font-bold text-muted mb-1">SEMI-FINALS · 16:30</div>
+              <BracketMatch matchId="sf1" t1={bracket.sf1t1} t2={bracket.sf1t2} label="SF 1" time="16:30" />
             </div>
-            <BracketMatch matchId="sf2" t1={bracket.sf2t1} t2={bracket.sf2t2} label="SF 2" time="15:30" />
+            <BracketMatch matchId="sf2" t1={bracket.sf2t1} t2={bracket.sf2t2} label="SF 2" time="16:40" />
           </div>
+
           <div className="text-center text-muted" style={{ fontSize: '1.5rem' }}>→</div>
+
+          {/* Final + 3rd Place */}
           <div className="flex flex-col gap-4">
             <div>
-              <div className="text-xs font-bold text-muted mb-1">FINAL · 16:00</div>
-              <BracketMatch matchId="final" t1={finalT1} t2={finalT2} label="Final" time="16:00" />
+              <div className="text-xs font-bold text-muted mb-1">FINAL · 17:00</div>
+              <BracketMatch
+                matchId="final"
+                t1={finalT1}
+                t2={finalT2}
+                label="Final 🏆"
+                time="17:00"
+                locked={finalsLocked}
+              />
             </div>
             <div>
-              <div className="text-xs font-bold text-muted mb-1">3RD PLACE · 16:00</div>
-              <BracketMatch matchId="third" t1={thirdT1} t2={thirdT2} label="3rd Place" time="16:00" />
+              <div className="text-xs font-bold text-muted mb-1">3RD PLACE · 16:50</div>
+              <BracketMatch
+                matchId="third"
+                t1={thirdT1}
+                t2={thirdT2}
+                label="3rd Place"
+                time="16:50"
+                locked={finalsLocked}
+              />
             </div>
           </div>
         </div>
@@ -128,7 +168,10 @@ export default function TOW() {
           <div className="card mb-4" style={{ borderColor: '#fde68a', background: '#fffbeb' }}>
             <div className="section-title mb-4">⚙️ Set Semi-Final Pairings</div>
             <div className="grid-2 gap-4">
-              {[['sf1t1', 'sf1t2', 'SF 1'], ['sf2t1', 'sf2t2', 'SF 2']].map(([k1, k2, lbl]) => (
+              {[
+                ['sf1t1', 'sf1t2', 'SF 1 · 16:30'],
+                ['sf2t1', 'sf2t2', 'SF 2 · 16:40'],
+              ].map(([k1, k2, lbl]) => (
                 <div key={lbl}>
                   <div className="form-label">{lbl}</div>
                   <select className="form-input mb-2" value={bracketEdit[k1]} onChange={e => setBracketEdit(p => ({ ...p, [k1]: e.target.value }))}>

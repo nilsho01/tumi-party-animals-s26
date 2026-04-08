@@ -5,6 +5,14 @@ import { useApp } from '../context/AppContext';
 import { TeamBadge, SportBadge } from '../components/TeamBadge';
 import ScoreModal from '../components/ScoreModal';
 
+function isGameLive(game) {
+  const now  = new Date();
+  const mins = now.getHours() * 60 + now.getMinutes();
+  const [sh, sm] = game.time.split(':').map(Number);
+  const [eh, em] = game.timeEnd.split(':').map(Number);
+  return mins >= sh * 60 + sm && mins < eh * 60 + em;
+}
+
 export default function Game() {
   const { id } = useParams();
   const game = GAMES.find(g => g.id === parseInt(id));
@@ -15,8 +23,9 @@ export default function Game() {
     <div className="page"><div className="alert alert-error">Game not found.</div></div>
   );
 
-  const r = getResult(game.id);
-  const t1 = TEAMS[game.t1], t2 = TEAMS[game.t2];
+  const r    = getResult(game.id);
+  const t1   = TEAMS[game.t1], t2 = TEAMS[game.t2];
+  const live = isGameLive(game);
   const roundGames = GAMES.filter(g => g.round === game.round && g.id !== game.id);
 
   const resultLabel = () => {
@@ -32,12 +41,28 @@ export default function Game() {
         <Link to="/schedule" className="text-muted text-sm btn btn-ghost btn-sm">← Schedule</Link>
       </div>
 
+      {/* Live banner */}
+      {live && !r && (
+        <div className="alert alert-warn mb-6">
+          🔴 <strong>This game is live right now!</strong>
+        </div>
+      )}
+
       {/* Main game card */}
       <div className="card mb-6 text-center">
-        <div className="mb-3"><SportBadge sport={game.sport} /></div>
-        <div className="text-muted text-sm mb-6">
+        <div className="mb-3">
+          <SportBadge sport={game.sport} />
+        </div>
+        <div className="text-muted text-sm mb-2">
           Round {game.round} · {game.time}–{game.timeEnd} · {game.field}
         </div>
+        {live && (
+          <div className="mb-4">
+            <span className="pill" style={{ background: '#fef9c3', color: '#854d0e', borderColor: '#fde047' }}>
+              🔴 Live
+            </span>
+          </div>
+        )}
 
         <div className="flex items-center justify-center gap-4 flex-wrap mb-6">
           {/* Team 1 */}
