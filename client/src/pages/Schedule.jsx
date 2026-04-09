@@ -14,6 +14,7 @@ function nowRound() {
     { round: 6, from: 15*60,    to: 15*60+30   },
     { round: 7, from: 15*60+30, to: 16*60      },
     { round: 8, from: 16*60,    to: 16*60+30   },
+    { round: 9, from: 16*60+30,    to: 17*60   },
   ];
   return slots.find(s => mins >= s.from && mins < s.to)?.round || null;
 }
@@ -33,7 +34,7 @@ export default function Schedule() {
   return (
     <div className="page">
       <h1 className="page-title">📅 Schedule</h1>
-      <p className="page-sub">8 Rounds · Each team plays 6 games · Volleyball, Frisbee, Dodgeball + Tug of War</p>
+      <p className="page-sub">9 Rounds · Each team plays 6 games · Volleyball, Frisbee, Dodgeball + Tug of War</p>
 
       {[1, 2, 3, 4, 5, 6, 7, 8].map(r => {
         const games = GAMES.filter(g => g.round === r);

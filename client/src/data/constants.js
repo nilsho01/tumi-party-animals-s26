@@ -29,16 +29,16 @@ export const GAMES = [
 
   // Round 4 · 14:00–14:30
   { id: 7,  round: 4, time: '14:00', timeEnd: '14:30', sport: 'volleyball', t1: 'pp', t2: 'gg', field: 'Field A', refTeam: 'pi' },
-  { id: 8,  round: 4, time: '14:00', timeEnd: '14:30', sport: 'dogeball',    t1: 'pi', t2: 'tt', field: 'Field C', refTeam: 'gg' },
+  { id: 8,  round: 4, time: '14:00', timeEnd: '14:30', sport: 'dodgeball',    t1: 'pi', t2: 'tt', field: 'Field C', refTeam: 'gg' },
   // Round 5 · 14:30–15:00
-  { id: 9,  round: 5, time: '14:30', timeEnd: '15:00', sport: 'frissbee', t1: 'pp', t2: 'tt', field: 'Field B', refTeam: 'gg' },
+  { id: 9,  round: 5, time: '14:30', timeEnd: '15:00', sport: 'frisbee', t1: 'pp', t2: 'tt', field: 'Field B', refTeam: 'gg' },
   { id: 10, round: 5, time: '14:30', timeEnd: '15:00', sport: 'volleyball',  t1: 'pi', t2: 'gg', field: 'Field A', refTeam: 'tt' },
   // Round 6 · 15:00–15:30
   { id: 11, round: 6, time: '15:00', timeEnd: '15:30', sport: 'volleyball',    t1: 'pp', t2: 'pi', field: 'Field A', refTeam: 'gg' },
   { id: 12, round: 6, time: '15:00', timeEnd: '15:30', sport: 'frisbee',  t1: 'tt', t2: 'gg', field: 'Field B', refTeam: 'pp' },
   // Round 7 · 15:30–16:00
   { id: 13, round: 7, time: '15:30', timeEnd: '16:00', sport: 'volleyball', t1: 'pp', t2: 'tt', field: 'Field A', refTeam: 'pi' },
-  { id: 14, round: 7, time: '15:30', timeEnd: '16:00', sport: 'dogeball',    t1: 'pi', t2: 'gg', field: 'Field C', refTeam: 'pp' },
+  { id: 14, round: 7, time: '15:30', timeEnd: '16:00', sport: 'dodgeball',    t1: 'pi', t2: 'gg', field: 'Field C', refTeam: 'pp' },
   // Round 8 · 16:00–16:30
   { id: 15, round: 8, time: '16:00', timeEnd: '16:30', sport: 'frisbee',  t1: 'pp', t2: 'pi', field: 'Field B', refTeam: 'tt' },
   { id: 16, round: 8, time: '16:00', timeEnd: '16:30', sport: 'dodgeball', t1: 'tt', t2: 'gg', field: 'Field C', refTeam: 'pp' },
@@ -48,10 +48,10 @@ export const GAMES = [
 ];
 
 export const TOW_MATCHES = [
-  { id: 'sf1',   label: 'Semi-Final 1', time: '16:30', timeEnd: '16:40' },
-  { id: 'sf2',   label: 'Semi-Final 2', time: '16:40', timeEnd: '16:50' },
-  { id: 'third', label: '3rd Place',    time: '16:50', timeEnd: '17:00' },
-  { id: 'final', label: 'Final 🏆',     time: '17:00', timeEnd: '17:10' },
+  { id: 'sf1',   label: 'Semi-Final 1', time: '17:00', timeEnd: '17:05' },
+  { id: 'sf2',   label: 'Semi-Final 2', time: '17:05', timeEnd: '17:10' },
+  { id: 'third', label: '3rd Place',    time: '17:10', timeEnd: '17:15' },
+  { id: 'final', label: 'Final 🏆',     time: '17:15', timeEnd: '17:20' },
 ];
 
 export function calcStandings(results, towPlacements = [], towBonus = { 1: 4, 2: 3, 3: 2, 4: 1 }) {
