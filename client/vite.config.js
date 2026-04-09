@@ -7,9 +7,10 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        target: 'https://pa-s26-api-8kup.onrender.com',
         changeOrigin: true,
       },
     },
+    historyApiFallback: true,
   },
 });
