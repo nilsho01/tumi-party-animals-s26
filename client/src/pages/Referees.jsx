@@ -115,7 +115,7 @@ function RefDashboard() {
         Click <strong>"Enter Score"</strong> on any game to submit the result. No password needed — you're already logged in.
       </div>
 
-      {[1, 2, 3, 4, 5, 6, 7, 8].map(r => {
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(r => {
         const games = GAMES.filter(g => g.round === r);
         const g0 = games[0];
         return (

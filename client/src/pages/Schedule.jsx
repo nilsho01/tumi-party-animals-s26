@@ -36,7 +36,7 @@ export default function Schedule() {
       <h1 className="page-title">📅 Schedule</h1>
       <p className="page-sub">9 Rounds · Each team plays 6 games · Volleyball, Frisbee, Dodgeball + Tug of War</p>
 
-      {[1, 2, 3, 4, 5, 6, 7, 8].map(r => {
+  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(r => {
         const games = GAMES.filter(g => g.round === r);
         const g0 = games[0];
         const isLive = curRound === r;

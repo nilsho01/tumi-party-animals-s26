@@ -42,9 +42,9 @@ export const GAMES = [
   // Round 8 · 16:00–16:30
   { id: 15, round: 8, time: '16:00', timeEnd: '16:30', sport: 'frisbee',  t1: 'pp', t2: 'pi', field: 'Field B', refTeam: 'tt' },
   { id: 16, round: 8, time: '16:00', timeEnd: '16:30', sport: 'dodgeball', t1: 'tt', t2: 'gg', field: 'Field C', refTeam: 'pp' },
-  // Round 8 · 16:30–17:00
-  { id: 15, round: 8, time: '16:00', timeEnd: '16:30', sport: 'dodgeball',  t1: 'pp', t2: 'pi', field: 'Field B', refTeam: 'tt' },
-  { id: 16, round: 8, time: '16:00', timeEnd: '16:30', sport: 'volleyball', t1: 'tt', t2: 'gg', field: 'Field C', refTeam: 'pp' },
+  // Round 9 · 16:30–17:00
+  { id: 17, round: 9, time: '16:30', timeEnd: '17:00', sport: 'dodgeball',  t1: 'pp', t2: 'pi', field: 'Field B', refTeam: 'tt' },
+  { id: 18, round: 9, time: '16:30', timeEnd: '17:00', sport: 'volleyball', t1: 'tt', t2: 'gg', field: 'Field C', refTeam: 'pp' },
 ];
 
 export const TOW_MATCHES = [
