@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>City Rally Munich – Erasmus Welcome Week SS26</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --br: #4A2C17;      /* dark brown – PDF header colour */
+  --br2: #7B4F2E;     /* mid brown */
+  --br3: #A0733A;     /* light brown */
+  --cr: #FAF7F1;      /* cream bg */
+  --cr2: #EDE7DA;     /* darker cream */
+  --sh: 0 4px 20px rgba(74,44,23,.14);
+  /* teams */
+  --pink:   #E91E8C;
+  --teal:   #00BCD4;
+  --purple: #9C27B0;
+  --green:  #27AE60;
+}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:var(--cr);color:var(--br);display:flex;flex-direction:column}
+
+/* ── HEADER ─────────────────────────────── */
+header{background:var(--br);color:#fff;text-align:center;padding:14px 20px 11px;flex-shrink:0}
+header .eye{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:.78;font-weight:700}
+header h1{font-family:'Fredoka One',sans-serif;font-size:28px;letter-spacing:.5px;margin:2px 0}
+header .sub{font-size:11px;opacity:.8;font-weight:600}
+
+/* ── STAT BAR ───────────────────────────── */
+.sbar{display:flex;background:var(--cr2);border-bottom:2px solid rgba(74,44,23,.13);flex-shrink:0}
+.sbar>div{flex:1;text-align:center;padding:9px 4px;border-right:1px solid rgba(74,44,23,.1)}
+.sbar>div:last-child{border-right:none}
+.sbar .n{font-family:'Fredoka One',sans-serif;font-size:21px;color:var(--br)}
+.sbar .l{font-size:9px;color:var(--br2);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:1px}
+
+/* ── LAYOUT ─────────────────────────────── */
+.layout{flex:1;display:flex;overflow:hidden;min-height:0}
+
+/* ── SIDEBAR ────────────────────────────── */
+.sidebar{width:330px;min-width:230px;flex-shrink:0;background:var(--cr);border-right:2px solid rgba(74,44,23,.11);overflow-y:auto;display:flex;flex-direction:column}
+
+.sh{position:sticky;top:0;z-index:5;background:var(--br);color:#fff;padding:8px 14px;font-family:'Fredoka One',sans-serif;font-size:14px;letter-spacing:.3px}
+
+/* station cards */
+.sc{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border-bottom:1px solid rgba(74,44,23,.07);cursor:pointer;transition:background .12s}
+.sc:hover{background:var(--cr2)}
+.sc.active{background:rgba(74,44,23,.07);border-left:3px solid var(--br);padding-left:10px}
+.sc-n{width:25px;height:25px;border-radius:50%;background:var(--br);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sc-b{flex:1;min-width:0}
+.sc-name{font-size:13px;font-weight:800;color:var(--br);margin-bottom:2px}
+.sc-desc{font-size:11px;color:var(--br2);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-pts{font-size:11px;font-weight:900;color:var(--br);flex-shrink:0;margin-left:2px}
+
+/* team cards */
+.tc{display:flex;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid rgba(74,44,23,.07);cursor:pointer;transition:background .12s}
+.tc:hover{background:var(--cr2)}
+.tc-dot{width:15px;height:15px;border-radius:50%;flex-shrink:0}
+.tc-name{font-size:12px;font-weight:800}
+.tc-loc{font-size:10px;color:var(--br2);margin-top:1px}
+
+/* bonus */
+.bc{display:flex;align-items:center;gap:10px;padding:10px 13px;border-bottom:1px solid rgba(74,44,23,.07)}
+.bc::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--br2);flex-shrink:0}
+.bc-t{font-size:11px;color:var(--br);flex:1;line-height:1.4;font-weight:600}
+.bc-p{font-size:14px;font-weight:900;color:var(--br);white-space:nowrap}
+
+.sfoot{padding:14px;text-align:center;font-size:10px;color:var(--br3);margin-top:auto;font-style:italic;line-height:1.6}
+
+/* ── MAP ────────────────────────────────── */
+.mw{flex:1;position:relative;min-width:0}
+#map{position:absolute;inset:0}
+
+.mbtns{position:absolute;top:10px;right:10px;z-index:1000;display:flex;flex-direction:column;gap:6px}
+.mb{background:var(--cr);border:1px solid rgba(74,44,23,.2);border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:var(--sh);color:var(--br);font-family:'Nunito',sans-serif;transition:background .12s}
+.mb:hover{background:var(--cr2)}
+.mb.on{background:var(--br);color:#fff;border-color:var(--br)}
+
+.mleg{position:absolute;bottom:22px;left:10px;z-index:1000;background:rgba(250,247,241,.95);border-radius:10px;padding:10px 14px;box-shadow:var(--sh);font-size:11px;line-height:1.85;border:1px solid rgba(74,44,23,.1)}
+.mleg strong{display:block;font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:var(--br2);margin-bottom:4px;font-weight:800}
+.lr{display:flex;align-items:center;gap:7px;font-weight:700;color:var(--br)}
+.ld{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+
+/* ══════════════════════════════════════════
+   SWIPE DETAIL PANEL
+══════════════════════════════════════════ */
+#dp{
+  position:absolute;bottom:0;left:0;right:0;
+  z-index:2000;
+  background:var(--cr);
+  border-radius:18px 18px 0 0;
+  box-shadow:0 -4px 32px rgba(74,44,23,.22);
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.32,.72,0,1);
+  border-top:3px solid var(--br);
+  max-height:68%;
+  display:flex;flex-direction:column;
+}
+#dp.open{transform:translateY(0)}
+
+.dp-handle{width:40px;height:4px;background:rgba(74,44,23,.2);border-radius:2px;margin:10px auto 0;flex-shrink:0}
+.dp-hdr{display:flex;align-items:center;padding:10px 16px 6px;gap:10px;flex-shrink:0}
+.dp-num{width:30px;height:30px;border-radius:50%;background:var(--br);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dp-ttl{font-family:'Fredoka One',sans-serif;font-size:19px;color:var(--br);flex:1;line-height:1.1}
+.dp-x{background:rgba(74,44,23,.1);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--br);font-weight:900;flex-shrink:0}
+.dp-x:hover{background:rgba(74,44,23,.2)}
+
+/* dots */
+.dp-dots{display:flex;justify-content:center;gap:7px;padding:4px 0 6px;flex-shrink:0}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(74,44,23,.18);cursor:pointer;transition:background .2s}
+.dot.on{background:var(--br)}
+
+/* hint */
+.dp-hint{font-size:10px;color:var(--br3);text-align:center;padding-bottom:2px;flex-shrink:0;font-weight:600}
+
+/* swipe viewport */
+.dp-port{overflow:hidden;flex:1;min-height:0}
+.dp-track{display:flex;height:100%;transition:transform .3s ease;will-change:transform}
+.dp-pg{min-width:100%;height:100%;overflow-y:auto;padding:4px 16px 20px}
+
+/* challenge box */
+.ch-box{background:var(--br);color:#fff;border-radius:14px;padding:16px}
+.ch-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;opacity:.65;font-weight:700;margin-bottom:6px}
+.ch-txt{font-size:14px;line-height:1.6;font-weight:700}
+.ch-pts{margin-top:12px;display:inline-block;background:rgba(255,255,255,.18);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:900}
+
+/* second challenge (for multi-challenge stations) */
+.ch-box2{background:var(--cr2);border-radius:14px;padding:14px;margin-top:10px;border-left:4px solid var(--br)}
+.ch-box2 .ch-lbl{color:var(--br2)}
+.ch-box2 .ch-txt{color:var(--br);font-size:13px;font-weight:700;line-height:1.5}
+.ch-box2 .ch-pts{background:var(--br);color:#fff;display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:900;margin-top:8px}
+
+/* info box */
+.inf-box{background:var(--cr2);border-radius:14px;padding:16px;border-left:4px solid var(--br)}
+.inf-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--br2);font-weight:700;margin-bottom:5px}
+.inf-ttl{font-family:'Fredoka One',sans-serif;font-size:17px;color:var(--br);margin-bottom:8px}
+.inf-txt{font-size:13px;color:var(--br2);line-height:1.65;font-weight:600}
+.inf-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{background:var(--br);color:#fff;font-size:10px;font-weight:700;padding:3px 11px;border-radius:20px}
+
+/* leaflet popup (fallback / desktop) */
+.leaflet-popup-content-wrapper{border-radius:12px!important;box-shadow:0 4px 24px rgba(74,44,23,.2)!important;background:var(--cr)!important}
+.leaflet-popup-tip{background:var(--cr)!important}
+.leaflet-popup-content{margin:0!important;font-family:'Nunito',sans-serif!important}
+
+/* responsive */
+@media(max-width:680px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%;max-height:33vh}
+  .mw{min-height:280px}
+  #dp{max-height:76%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eye">Erasmus Welcome Week</div>
+  <h1>CITY RALLY MUNICH</h1>
+  <div class="sub">Summer Semester 2026 · Counter Clockwise</div>
+</header>
+
+<div class="sbar">
+  <div><div class="n">11</div><div class="l">Stations</div></div>
+  <div><div class="n">4</div><div class="l">Teams</div></div>
+  <div><div class="n">14P</div><div class="l">Tasks</div></div>
+  <div><div class="n">16P</div><div class="l">Bonus</div></div>
+</div>
+
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <div class="sidebar" id="sidebar">
+
+    <div class="sh">📍 Stations</div>
+    <!-- filled by JS -->
+
+    <div class="sh" id="sh-teams">🚩 Team Starting Points</div>
+    <!-- filled by JS -->
+
+    <div class="sh">⭐ Bonus Challenges</div>
+    <div class="bc"><div class="bc-t">Find the plate that reads TUM's location and the acting gravity</div><div class="bc-p">+2P</div></div>
+    <div class="bc"><div class="bc-t">Take a group picture with maximum 3 feet and 2 hands on the ground</div><div class="bc-p">+3P</div></div>
+    <div class="bc"><div class="bc-t">Swim in the Isar with a teammate <em>(only if volunteered!)</em></div><div class="bc-p">+4P</div></div>
+    <div class="bc"><div class="bc-t">Shave a male team member's leg <em>(only if volunteered!)</em></div><div class="bc-p">+4P</div></div>
+    <div class="bc"><div class="bc-t">Photo with a local wearing TUM or LMU merch</div><div class="bc-p">+3P</div></div>
+
+    <div class="sfoot">P.S. Don't forget to have fun in the process 😊<br>Private Version · Erasmus Welcome Week SS26</div>
+  </div>
+
+  <!-- ── MAP ── -->
+  <div class="mw">
+    <div id="map"></div>
+
+    <div class="mbtns">
+      <button class="mb on" id="btnR" onclick="toggleRoute()">🗺 Route</button>
+      <button class="mb" onclick="fitAll()">⊙ Fit all</button>
+    </div>
+
+    <div class="mleg">
+      <strong>Teams · Counter Clockwise</strong>
+      <div class="lr"><div class="ld" style="background:var(--pink)"></div>🐧 Pink Penguins → TUM</div>
+      <div class="lr"><div class="ld" style="background:var(--teal)"></div>🐢 Turquoise Turtles → Odeonsplatz</div>
+      <div class="lr"><div class="ld" style="background:var(--purple)"></div>🐆 Purple Panthers → Marienplatz</div>
+      <div class="lr"><div class="ld" style="background:var(--green)"></div>🐐 Green Goats → LMU</div>
+    </div>
+
+    <!-- ── DETAIL PANEL ── -->
+    <div id="dp">
+      <div class="dp-handle"></div>
+      <div class="dp-hdr">
+        <div class="dp-num" id="dp-num">1</div>
+        <div class="dp-ttl" id="dp-ttl">–</div>
+        <button class="dp-x" onclick="closePanel()">✕</button>
+      </div>
+      <div class="dp-hint">← swipe left for city guide info</div>
+      <div class="dp-dots" id="dp-dots">
+        <div class="dot on" onclick="goPg(0)"></div>
+        <div class="dot"    onclick="goPg(1)"></div>
+      </div>
+      <div class="dp-port" id="dp-port">
+        <div class="dp-track" id="dp-track">
+
+          <!-- PAGE 0: CHALLENGE -->
+          <div class="dp-pg" id="pg0">
+            <div class="ch-box">
+              <div class="ch-lbl">🎯 Your Challenge</div>
+              <div class="ch-txt" id="dp-ch1">–</div>
+              <div class="ch-pts" id="dp-p1">1P</div>
+            </div>
+            <div class="ch-box2" id="dp-ch2-wrap" style="display:none">
+              <div class="ch-lbl">🎯 Challenge 2</div>
+              <div class="ch-txt" id="dp-ch2">–</div>
+              <div class="ch-pts" id="dp-p2">1P</div>
+            </div>
+          </div>
+
+          <!-- PAGE 1: CITY GUIDE -->
+          <div class="dp-pg" id="pg1">
+            <div class="inf-box">
+              <div class="inf-lbl">🏛 City Guide</div>
+              <div class="inf-ttl" id="dp-itl">–</div>
+              <div class="inf-txt" id="dp-itx">–</div>
+              <div class="inf-chips" id="dp-ichips"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /dp -->
+
+  </div><!-- /mw -->
+</div><!-- /layout -->
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   DATA  (counter-clockwise order)
+═══════════════════════════════════════════════════════ */
+const ST = [
+  {
+    num:1, lat:48.1374, lng:11.5755,
+    name:"Marienplatz",
+    ch1:"Recreate the Glockenspiel: one person plays the drummer, the others act out the dancing figures.",
+    p1:"1P", ch2:null,
+    info:{
+      title:"Marienplatz",
+      text:"Munich's central square since 1158. The Neo-Gothic New Town Hall's Glockenspiel performs daily at 11am & 12pm with 43 bells and 32 life-size figures re-enacting stories from Munich's history.",
+      chips:["Since 1158","Glockenspiel 11am","Mary Column 1638","Heart of Munich"]
+    }
+  },
+  {
+    num:2, lat:48.1351, lng:11.5763,
+    name:"Viktualienmarkt",
+    ch1:"Consume 3 typical Bavarian dishes and have a beer together – don't forget the photo!",
+    p1:"1P",
+    ch2:"Prosit with a local.",
+    p2:"1P",
+    info:{
+      title:"Viktualienmarkt",
+      text:"Munich's open-air market since 1807. The name comes from the Latin 'victualia' (food provisions). Home to Europe's most famous outdoor beer garden. The decorated Maypole changes its scenes every few years.",
+      chips:["Since 1807","Beer garden","Maypole","Daily fresh market"]
+    }
+  },
+  {
+    num:3, lat:48.1385, lng:11.5720,
+    name:"Promenadeplatz",
+    ch1:"Take a video of a few group members performing a synchronized dance move of a legendary musician or performer.",
+    p1:"1P", ch2:null,
+    info:{
+      title:"Promenadeplatz",
+      text:"A historic square in Munich's old town. Since the 1990s fans have maintained a monument to Michael Jackson here, covered in flowers and mementos. The square also holds a monument to Renaissance composer Orlando di Lasso.",
+      chips:["Michael Jackson memorial","Historic square","Old town","Renaissance heritage"]
+    }
+  },
+  {
+    num:4, lat:48.1482, lng:11.5706,
+    name:"Karolinenplatz",
+    ch1:"Make a video of the whole group performing the Egyptian dance walk.",
+    p1:"1P", ch2:null,
+    info:{
+      title:"Karolinenplatz",
+      text:"Home to a striking 29-metre obelisk erected in 1833, dedicated to the memory of 30,000 Bavarian soldiers who died in Napoleon's catastrophic Russian campaign of 1812. The obelisk is made from captured French cannon.",
+      chips:["Obelisk 29m","Built 1833","Napoleonic Wars","Cannon bronze"]
+    }
+  },
+  {
+    num:5, lat:48.1464, lng:11.5661,
+    name:"Königsplatz",
+    ch1:"Make a pyramid out of people.",
+    p1:"1P", ch2:null,
+    info:{
+      title:"Königsplatz",
+      text:"Munich's 'Athens on the Isar' – a neoclassical square commissioned by Crown Prince Ludwig in the early 19th century. Surrounded by the Propyläen gate, the Glyptothek (sculpture museum) and the State Collection of Antiquities.",
+      chips:["Athens on Isar","Built ~1820","Glyptothek","Neoclassical"]
+    }
+  },
+  {
+    num:6, lat:48.1498, lng:11.5677,
+    name:"TUM Main Campus",
+    ch1:"Find the TUM Clocktower and take a group picture.",
+    p1:"1P", ch2:null,
+    info:{
+      title:"TUM Main Campus",
+      text:"The Technical University of Munich was founded in 1868 by King Ludwig II. Its iconic Uhrenturm (clock tower) watches over Arcisstraße. TUM has produced over 18 Nobel laureates and is consistently ranked Germany's top technical university.",
+      chips:["Founded 1868","18+ Nobel laureates","~40,000 students","Top tech uni"]
+    }
+  },
+  {
+    num:7, lat:48.1508, lng:11.5800,
+    name:"Universität (LMU)",
+    ch1:"Find the documents on the ground and explain their context.",
+    p1:"1P", ch2:null,
+    info:{
+      title:"Ludwig-Maximilians-Universität",
+      text:"Founded in 1472 in Ingolstadt, moved to Munich in 1826. The White Rose resistance movement against the Nazis was based here – leaflets are embedded in the ground outside the main entrance in their memory. One of Germany's largest universities with ~50,000 students.",
+      chips:["Founded 1472","White Rose memorial","~50,000 students","43 Nobel laureates"]
+    }
+  },
+  {
+    num:8, lat:48.1437, lng:11.5842,
+    name:"Englischer Garten",
+    ch1:"How cold is the water? Show us in a creative way.",
+    p1:"1P", ch2:null,
+    info:{
+      title:"Englischer Garten & Eisbach",
+      text:"One of the world's largest urban parks – bigger than Central Park! Created in 1789. The Eisbach river wave beneath the Haus der Kunst bridge has been surfed since the 1970s and is now one of the most filmed surf spots worldwide.",
+      chips:["Bigger than Central Park","Since 1789","Eisbach surfing since 1970s","4.17 km²"]
+    }
+  },
+  {
+    num:9, lat:48.1441, lng:11.5808,
+    name:"Hofgarten",
+    ch1:"Show us your director's talent and make a photo love story (at least 5 pictures).",
+    p1:"1P",
+    ch2:"Take a picture of the most beautiful flower.",
+    p2:"1P",
+    info:{
+      title:"Hofgarten",
+      text:"The 'Court Garden' was laid out in 1613–1617 in Italian Renaissance style by Duke Maximilian I. At its centre stands the Dianatempel (Diana Temple) from 1615. It served as the private garden of the Wittelsbach royal family for centuries.",
+      chips:["Since 1615","Renaissance Italian style","Diana Temple","Former royal garden"]
+    }
+  },
+  {
+    num:10, lat:48.1422, lng:11.5767,
+    name:"Odeonsplatz",
+    ch1:"Take a snob selfie at Starbucks – most unimpressed expression wins.",
+    p1:"1P",
+    ch2:"Take a group picture with the lucky lions.",
+    p2:"1P",
+    info:{
+      title:"Odeonsplatz & Feldherrnhalle",
+      text:"The Feldherrnhalle (Field Marshals' Hall) was built 1841–44, modelled on Florence's Loggia dei Lanzi. The two bronze lions flanking the entrance are said to bring good luck to anyone who touches their paw – a Munich tradition!",
+      chips:["Built 1841–44","Florentine style","Lucky lion paws","Historic events site"]
+    }
+  },
+  {
+    num:11, lat:48.1395, lng:11.5797,
+    name:"Staatsoper",
+    ch1:"Sing the most dramatic moment of your favourite song as an opera performance in front of the Staatsoper entrance. Minimum 30 seconds!",
+    p1:"1P", ch2:null,
+    info:{
+      title:"Bavarian State Opera",
+      text:"One of the world's leading opera companies. The original building opened in 1818, was severely bombed in WWII, and rebuilt in 1963. Mozart gave a performance here in 1781. The main hall seats 2,100 and is famous for its outstanding acoustics.",
+      chips:["World-class opera","Built 1818","Mozart performed here","2,100 seats"]
+    }
+  }
+];
+
+const TEAMS = [
+  { name:"🐆 Purple Panthers", color:"var(--purple)", hex:"#9C27B0", lat:48.1374, lng:11.5755, loc:"Marienplatz" },
+  { name:"🐢 Turquoise Turtles", color:"var(--teal)",   hex:"#00BCD4", lat:48.1422, lng:11.5767, loc:"Odeonsplatz" },
+  { name:"🐐 Green Goats",      color:"var(--green)",  hex:"#27AE60", lat:48.1508, lng:11.5800, loc:"Universität (LMU)" },
+  { name:"🐧 Pink Penguins",    color:"var(--pink)",   hex:"#E91E8C", lat:48.1498, lng:11.5677, loc:"TUM Main Campus" }
+];
+
+/* ═══════════════════════════════════════════════════════
+   BUILD SIDEBAR STATION CARDS
+═══════════════════════════════════════════════════════ */
+const sidebar = document.getElementById('sidebar');
+const teamsHead = document.getElementById('sh-teams');
+
+ST.forEach((s,i)=>{
+  const pts = s.ch2 ? '2P' : '1P';
+  const div = document.createElement('div');
+  div.className='sc';
+  div.id='sc'+i;
+  div.onclick=()=>openStation(i);
+  div.innerHTML=`
+    <div class="sc-n">${s.num}</div>
+    <div class="sc-b">
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-desc">${s.ch1}</div>
+    </div>
+    <div class="sc-pts">${pts}</div>`;
+  sidebar.insertBefore(div, teamsHead);
+});
+
+TEAMS.forEach((t,i)=>{
+  const div = document.createElement('div');
+  div.className='tc';
+  div.onclick=()=>goStart(i);
+  div.innerHTML=`
+    <div class="tc-dot" style="background:${t.hex}"></div>
+    <div>
+      <div class="tc-name" style="color:${t.hex}">${t.name}</div>
+      <div class="tc-loc">Start: ${t.loc}</div>
+    </div>`;
+  teamsHead.insertAdjacentElement('afterend', div);
+  // keep inserting after each new card
+});
+// re-insert bonus header after team cards
+const bonusSH = sidebar.querySelector('.sh:last-of-type');
+
+/* ═══════════════════════════════════════════════════════
+   MAP
+═══════════════════════════════════════════════════════ */
+const map = L.map('map',{center:[48.1440,11.5740],zoom:14});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a>',maxZoom:19
+}).addTo(map);
+
+/* Station markers */
+function mkStIcon(num){
+  return L.divIcon({
+    className:'',
+    html:`<div style="width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+          background:#4A2C17;border:3px solid #FAF7F1;box-shadow:0 2px 8px rgba(74,44,23,.4);
+          display:flex;align-items:center;justify-content:center;">
+          <span style="transform:rotate(45deg);color:#fff;font-weight:900;font-size:12px;">${num}</span>
+        </div>`,
+    iconSize:[34,34],iconAnchor:[17,34],popupAnchor:[0,-36]
+  });
+}
+
+const stMks=[];
+ST.forEach((s,i)=>{
+  const m=L.marker([s.lat,s.lng],{icon:mkStIcon(s.num)}).addTo(map);
+  m.on('click',()=>openStation(i));
+  stMks.push(m);
+});
+
+/* Team start markers */
+function mkTeamIcon(hex,label){
+  return L.divIcon({
+    className:'',
+    html:`<div style="display:flex;flex-direction:column;align-items:center;">
+      <div style="background:${hex};color:#fff;font-size:9px;font-weight:800;
+        padding:4px 9px;border-radius:7px;white-space:nowrap;
+        box-shadow:0 2px 8px rgba(0,0,0,.25);line-height:1.3;">▶ ${label}</div>
+      <div style="width:2px;height:7px;background:${hex};"></div>
+    </div>`,
+    iconSize:[100,34],iconAnchor:[50,34],popupAnchor:[0,-36]
+  });
+}
+
+const teamMks=[];
+TEAMS.forEach((t,i)=>{
+  // small offset so label doesn't cover station marker
+  const offsets=[[0.0007,-0.0006],[-0.0007,0.0006],[0.0008,0.0004],[-0.0006,-0.0007]];
+  const [dlat,dlng]=offsets[i]||[0.0006,0];
+  const m=L.marker([t.lat+dlat,t.lng+dlng],{icon:mkTeamIcon(t.hex,t.name)}).addTo(map);
+  m.on('click',()=>goStart(i));
+  teamMks.push(m);
+});
+
+/* Counter-clockwise route – closes back to station 1 */
+const routeCoords=[...ST.map(s=>[s.lat,s.lng]),[ST[0].lat,ST[0].lng]];
+let routeLine=L.polyline(routeCoords,{
+  color:'#4A2C17',weight:4,opacity:.65,dashArray:'10,8',lineJoin:'round'
+}).addTo(map);
+let routeOn=true;
+
+function toggleRoute(){
+  routeOn=!routeOn;
+  const b=document.getElementById('btnR');
+  routeOn?(routeLine.addTo(map),b.classList.add('on')):(map.removeLayer(routeLine),b.classList.remove('on'));
+}
+
+const allBounds=L.latLngBounds([...ST.map(s=>[s.lat,s.lng]),...TEAMS.map(t=>[t.lat,t.lng])]);
+function fitAll(){map.fitBounds(allBounds,{padding:[40,40]})}
+
+function goStart(i){
+  const t=TEAMS[i];
+  map.setView([t.lat,t.lng],16,{animate:true});
+  setTimeout(()=>teamMks[i].openPopup(),300);
+}
+
+/* ═══════════════════════════════════════════════════════
+   DETAIL PANEL
+═══════════════════════════════════════════════════════ */
+const panel=document.getElementById('dp');
+const track=document.getElementById('dp-track');
+let curPage=0;
+let curStation=-1;
+
+function openStation(i){
+  const s=ST[i];
+  curStation=i;
+
+  // fill data
+  document.getElementById('dp-num').textContent=s.num;
+  document.getElementById('dp-ttl').textContent=s.name;
+  document.getElementById('dp-ch1').textContent=s.ch1;
+  document.getElementById('dp-p1').textContent=s.p1;
+
+  const ch2wrap=document.getElementById('dp-ch2-wrap');
+  if(s.ch2){
+    document.getElementById('dp-ch2').textContent=s.ch2;
+    document.getElementById('dp-p2').textContent=s.p2||'1P';
+    ch2wrap.style.display='block';
+  } else {
+    ch2wrap.style.display='none';
+  }
+
+  document.getElementById('dp-itl').textContent=s.info.title;
+  document.getElementById('dp-itx').textContent=s.info.text;
+  const chips=document.getElementById('dp-ichips');
+  chips.innerHTML='';
+  s.info.chips.forEach(c=>{
+    const el=document.createElement('div');
+    el.className='chip';el.textContent=c;chips.appendChild(el);
+  });
+
+  goPg(0,false);
+  panel.classList.add('open');
+
+  // highlight sidebar
+  document.querySelectorAll('.sc').forEach(c=>c.classList.remove('active'));
+  const card=document.getElementById('sc'+i);
+  if(card){card.classList.add('active');card.scrollIntoView({behavior:'smooth',block:'nearest'})}
+
+  // pan map
+  map.setView([s.lat,s.lng],16,{animate:true});
+}
+
+function closePanel(){
+  panel.classList.remove('open');
+  document.querySelectorAll('.sc').forEach(c=>c.classList.remove('active'));
+}
+
+function goPg(n,animate=true){
+  curPage=n;
+  track.style.transition=animate?'transform .3s ease':'none';
+  track.style.transform=`translateX(-${n*100}%)`;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===n));
+}
+
+/* ── SWIPE GESTURE ── */
+const port=document.getElementById('dp-port');
+let sx=0,sy=0,dragging=false,moved=false;
+
+function onStart(x,y){sx=x;sy=y;dragging=true;moved=false;}
+function onMove(x,y){
+  if(!dragging)return;
+  const dx=x-sx,dy=y-sy;
+  if(!moved&&Math.abs(dx)>Math.abs(dy)*1.2)moved=true;
+}
+function onEnd(x){
+  if(!dragging)return;
+  dragging=false;
+  const dx=x-sx;
+  if(Math.abs(dx)>40){
+    if(dx<0&&curPage===0)goPg(1);
+    else if(dx>0&&curPage===1)goPg(0);
+  }
+}
+
+// touch
+port.addEventListener('touchstart',e=>{const t=e.touches[0];onStart(t.clientX,t.clientY)},{passive:true});
+port.addEventListener('touchmove', e=>{const t=e.touches[0];onMove(t.clientX,t.clientY)},{passive:true});
+port.addEventListener('touchend',  e=>{const t=e.changedTouches[0];onEnd(t.clientX)});
+// mouse
+port.addEventListener('mousedown',e=>onStart(e.clientX,e.clientY));
+port.addEventListener('mousemove',e=>onMove(e.clientX,e.clientY));
+port.addEventListener('mouseup',  e=>onEnd(e.clientX));
+port.addEventListener('mouseleave',e=>{if(dragging)onEnd(e.clientX)});
+
+// close on map click (outside markers)
+map.on('click',()=>closePanel());
+
+setTimeout(fitAll,150);
+</script>
+</body>
+</html>
